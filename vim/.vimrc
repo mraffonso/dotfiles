@@ -30,3 +30,6 @@ set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLo
 
 " Use the vividchalk color scheme from tpope (https://github.com/tpope/vim-vividchalk)
 colorscheme vividchalk
+
+" Vim Tag List 
+nnoremap <silent> <F8> :TlistToggle<CR> 
