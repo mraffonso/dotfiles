@@ -32,4 +32,14 @@ set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLo
 colorscheme vividchalk
 
 " Vim Tag List 
-nnoremap <silent> <F8> :TlistToggle<CR> 
+nnoremap <silent> <F8> :TlistToggle<CR>
+
+" size of a hard tabstop
+set tabstop=2
+
+" size of an "indent"
+set shiftwidth=2
+
+" a combination of spaces and tabs are used to simulate tab stops at a width
+" other than the (hard)tabstop
+set softtabstop=2
