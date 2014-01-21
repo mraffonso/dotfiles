@@ -1,6 +1,19 @@
 " must come first
 set nocompatible
 
+" Vundle stuff
+filetype off                  " required!
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+Bundle 'gmarik/vundle' 
+
+" Bundles
+Bundle 'joonty/vim-phpqa.git'
+
+filetype plugin indent on     " required!
+
 syntax enable
 filetype plugin indent on
 
