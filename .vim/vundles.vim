@@ -19,7 +19,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " Split up vundles in ~/.vim/vundles/ to making editing easier.
-runtime ctrlp.vundle
+runtime project.vundle
 
 " ========================== End ==========================
 
