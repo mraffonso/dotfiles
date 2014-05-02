@@ -1,99 +1,122 @@
-"        __         
-" ___  _|__| _____  
-" \  \/ /  |/     \ 
-"  \   /|  |  Y Y  \
-"   \_/ |__|__|_|  /
-"                \/ 
+"             __                            
+"     __  __ /\_\    ___ ___   _ __   ___   
+"    /\ \/\ \\/\ \ /' __` __`\/\`'__\/'___\ 
+"  __\ \ \_/ |\ \ \/\ \/\ \/\ \ \ \//\ \__/ 
+" /\_\\ \___/  \ \_\ \_\ \_\ \_\ \_\\ \____\
+" \/_/ \/__/    \/_/\/_/\/_/\/_/\/_/ \/____/ 
+"
 
-" Necesary for lots of cool vim things
+" Use Vim settings instead of strict Vi compatible settings
+" This must be set first, since it changes other options.
 set nocompatible
 
-"
-" PLUGINS
-"
+" ================= General Configuration =================
 
-" Vundle
-"
-" Steps:
-" git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-"
-" Vim: :PluginInstall
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+set number " Line numbers are good
+set backspace=indent,eol,start " Allow backspace in insert mode
+set history=1000 " Store lots of :cmdline history
+set showcmd " Show incomplete cmds down the bottom
+set showmode " Show current mode down the bottom
+set gcr=a:blinkon0 " Disable cursor blink
+set visualbell " No sounds
+set autoread " Reload files changed outside vim
+set hidden " Allow buffers to exist in background like other editors
+set mouse=a " Mouse support in console
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-
-" ctrlp.vim
-"
-" Vim: :helptags ~/.vim/bundle/ctrlp.vim/doc
-Plugin 'kien/ctrlp.vim'
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-
-"
-" VIM CONFIG
-"
-
-" Set color scheme
-"colorscheme metacosm
-
-" Enable syntax highlighting
+" Turn on syntax highlighting
 syntax on
 
-" Shows what you are typing as a command
-set showcmd
+" Change leader to a comma because the backslash is too far away.
+" This has to be set before vundle
+let mapleader=","
 
-" Disable beeping
-set visualbell
+" ================= Vundle Initialization =================
 
-" Set tabs to 2 spaces
-set tabstop=2
+" This loads all the plugins specified in ~/.vim/vundle.vim
+" Use Vundle plugin to manage all other plugins
+if filereadable(expand("~/.vim/vundles.vim"))
+  source ~/.vim/vundles.vim
+endif
+
+" ====================== Swap Files =======================
+
+" Enable swapfiles and set path
+silent !mkdir -p ~/.vim/tmp > /dev/null 2>&1
+set swapfile
+set backupdir=~/.vim/tmp,~/tmp,/var/tmp,/tmp
+set directory=~/.vim/tmp,~/tmp,/var/tmp,/tmp
+
+" ==================== Persistent Undo ====================
+
+" Keep undo history across sessions, by storing in file.
+" Only works all the time.
+if has('persistent_undo')
+  silent !mkdir ~/.vim/backups > /dev/null 2>&1
+  set undodir=~/.vim/backups
+  set undofile
+endif
+
+" ====================== Indentation ======================
+
+set autoindent
+set smartindent
+set smarttab
 set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 set expandtab
 
-" Enable auto-indent
-set autoindent
+filetype indent on
 
-" Enable tab completion
-set wildmenu
+" Display tabs and trailing spaces visually
+set list listchars=tab:\ \ ,trail:·
+
+set nowrap " Don't wrap lines
+set linebreak "Wrap lines at convenient points
+
+" ========================= Folds =========================
+
+set foldmethod=indent " Fold based on indent
+set foldnestmax=3 " Deepest fold is 3 levels
+set nofoldenable " Dont fold by default
+
+" ======================= Completion ======================
+
 set wildmode=list:longest,full
+set wildmenu " Enable ctrl-n and ctrl-p to scroll thru matches
+set wildignore=*.o,*.obj,*~ " Stuff to ignore when tab completing
+set wildignore+=*vim/backups*
+set wildignore+=*sass-cache*
+set wildignore+=*DS_Store*
+set wildignore+=vendor/rails/**
+set wildignore+=vendor/cache/**
+set wildignore+=*.gem
+set wildignore+=log/**
+set wildignore+=tmp/**
+set wildignore+=*.png,*.jpg,*.gif
 
-" Enable mouse support in console
-set mouse=a
+" ======================= Scrolling =======================
 
-" Enable line numbers
-set number
+set scrolloff=8 " Start scrolling when we're 8 lines away from margins
+set sidescrolloff=15
+set sidescroll=1
 
-" Enable case insensitive search unless uppercase is used
-set ignorecase
-set smartcase
+" ======================= Searching =======================
 
+set ignorecase " Case insensitive search
+set smartcase " Unless uppercase is used
+set incsearch " Incremental search
+set hlsearch " Highlight matching text
+
+" ======================== Copying ========================
+let g:clipbrdDefaultReg = '+' " Since I use linux, I want this
+vmap <C-c> "+y " Copy selected text with CTRL+c
+
+" ======================== Mapping ========================
 " Remap jj to escape in insert mode
 inoremap jj <Esc>
 nnoremap JJJJ <Nop>
 
-" Enable incremental search, and highlight matching text
-set incsearch
-set hlsearch
-
-" Remove the buffer when tabs are closed
-set nohidden
-
-" Improved statusbar
+" ======================= Statusbar =======================
 set laststatus=2
 set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
-
-" Enable swapfiles and set path
-"
-" Steps:
-" mkdir -p ~/tmp
-set swapfile
-set dir=~/tmp
-
-" To disable backups use
-" set nobackup
