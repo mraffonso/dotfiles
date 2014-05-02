@@ -10,6 +10,7 @@ filetype off                  " required
 
 " Set the runtime path to include Vundle and initialize.
 set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.vim/vundles/ " Submodules
 call vundle#begin()
 
 " ======================== Vundles ========================
@@ -17,11 +18,8 @@ call vundle#begin()
 " Let Vundle manage Vundle.
 Plugin 'gmarik/Vundle.vim'
 
-" ctrlp
-"
-" Brief help
-" :helptags ~/.vim/bundle/ctrlp.vim/doc
-Plugin 'kien/ctrlp.vim'
+" Split up vundles in ~/.vim/vundles/ to making editing easier.
+runtime ctrlp.vundle
 
 " ========================== End ==========================
 
@@ -42,5 +40,8 @@ filetype plugin on
 
 " ================== Plugin Configuration =================
 
-" ctrlp
-set runtimepath^=~/.vim/bundle/ctrlp.vim
+" Configurations added to ~/.vim/vundles/settings will be added
+" This helps to keep configurations separate and easily loaded
+for fpath in split(globpath('~/.vim/vundles/settings', '*.vim'), '\n')
+  exe 'source' fpath
+endfor

@@ -20,7 +20,7 @@ set showmode " Show current mode down the bottom
 set gcr=a:blinkon0 " Disable cursor blink
 set visualbell " No sounds
 set autoread " Reload files changed outside vim
-set hidden " Allow buffers to exist in background like other editors
+set nohidden " Close buffers immediately
 set mouse=a " Mouse support in console
 
 " Turn on syntax highlighting
@@ -109,14 +109,35 @@ set incsearch " Incremental search
 set hlsearch " Highlight matching text
 
 " ======================== Copying ========================
+
 let g:clipbrdDefaultReg = '+' " Since I use linux, I want this
 vmap <C-c> "+y " Copy selected text with CTRL+c
 
 " ======================== Mapping ========================
+
 " Remap jj to escape in insert mode
 inoremap jj <Esc>
 nnoremap JJJJ <Nop>
 
 " ======================= Statusbar =======================
+
 set laststatus=2
 set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
+
+" ======================= Tab Pages =======================
+
+" CTRL-Tab is next tab
+noremap <C-Tab> :<C-U>tabnext<CR>
+inoremap <C-Tab> <C-\><C-N>:tabnext<CR>
+cnoremap <C-Tab> <C-C>:tabnext<CR>
+" CTRL-SHIFT-Tab is previous tab
+noremap <C-S-Tab> :<C-U>tabprevious<CR>
+inoremap <C-S-Tab> <C-\><C-N>:tabprevious<CR>
+cnoremap <C-S-Tab> <C-C>:tabprevious<CR>
+
+" ================ Post Setup Instructions ================
+
+" After a fresh setup with this vim config you should do the following.
+
+" Add helptags for ctrlp
+" :helptags ~/.vim/bundle/ctrlp.vim/doc
