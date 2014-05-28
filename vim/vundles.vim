@@ -21,6 +21,7 @@ Plugin 'gmarik/Vundle.vim'
 " Split up vundles in ~/.vim/vundles/ to making editing easier.
 runtime project.vundle
 runtime theme.vundle
+runtime completion.vundle
 
 " ========================== End ==========================
 

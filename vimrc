@@ -130,3 +130,9 @@ set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 
 " Add helptags for ctrlp
 " :helptags ~/.vim/bundle/ctrlp.vim/doc
+
+" Create ctags for OmniCppComplete
+" cd ~/.vim/tags
+" ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ C:\MinGW\include
+" ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ C:\MinGW\lib\gcc\mingw32\4.8.1\include
+
