@@ -22,6 +22,7 @@ set visualbell " No sounds
 set autoread " Reload files changed outside vim
 set nohidden " Close buffers immediately
 set mouse=a " Mouse support in console
+set fileformat=unix " Ditch the dirty CRLF
 
 " Turn on syntax highlighting
 syntax on
