@@ -1,0 +1,32 @@
+" Candy
+" Color scheme ( background is black ).
+Plugin 'candy.vim'
+
+" GitHub
+" A gvim colorscheme based on github's syntax highlighting.
+Plugin 'github-theme'
+
+" GRB256
+" Gary Bernhardt's grb256 vim theme, based on ir_black.
+Plugin 'quanganhdo/grb256'
+
+" Guardian
+" Colorful theme with rich syntax for coders.
+Plugin 'Guardian'
+
+" Jellybeans
+" Colorful, dark color scheme, inspired by ir_black and twilight.
+Plugin 'jellybeans.vim'
+
+" Solarized
+" Beautiful dual light/dark, selective contrast, GUI/256/16 colorscheme.
+Plugin 'Solarized'
+
+" Twilight
+" A clone of Textmates twilight scheme.
+Plugin 'twilight'
+
+" Vividchalk
+" A colorscheme strangely reminiscent of Vibrant Ink for a certain OS X editor.
+Plugin 'vividchalk.vim'
+
