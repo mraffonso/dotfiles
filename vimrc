@@ -119,6 +119,8 @@ vmap <C-c> "+y " Copy selected text with CTRL+c
 " Remap jj to escape in insert mode
 inoremap jj <Esc>
 nnoremap JJJJ <Nop>
+inoremap JJ <ESC>
+nnoremap JJJJ <Nop>
 
 " ======================= Statusbar =======================
 
@@ -129,11 +131,21 @@ set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 
 " After a fresh setup with this vim config you should do the following.
 
-" Add helptags for ctrlp
-" :helptags ~/.vim/bundle/ctrlp.vim/doc
+" Install vundle and plugins
+" git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+" vim +PluginInstall +qall
 
-" Create ctags for OmniCppComplete
+" Add helptags for ctrlp
+" vim -c "helptags ~/.vim/bundle/ctrlp.vim/doc" -q
+
+" Install ctags and create tags for OmniCppComplete
+" sudo apt-get install exuberant-ctags
+"
+" Linux
 " cd ~/.vim/tags
-" ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ C:\MinGW\include
-" ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ C:\MinGW\lib\gcc\mingw32\4.8.1\include
+" ctags -o tags -R --c++-kinds=+p --fields=+iaS --extra=+q /usr/include
+"
+" Windows
+" ctags -o tags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ C:\MinGW\include
+" ctags -o tags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ C:\MinGW\lib\gcc\mingw32\4.8.1\include
 
