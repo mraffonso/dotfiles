@@ -39,13 +39,14 @@ if filereadable(expand("~/.vim/vundles.vim"))
   source ~/.vim/vundles.vim
 endif
 
-" ====================== Swap Files =======================
+" ================ Swap, Backps & Viminfo =================
 
 " Enable swapfiles and set path
 silent !mkdir -p ~/.vim/tmp > /dev/null 2>&1
 set swapfile
 set backupdir=~/.vim/tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim/tmp,~/tmp,/var/tmp,/tmp
+set viminfo+=n~/.vim/viminfo
 
 " ==================== Persistent Undo ====================
 
@@ -136,15 +137,16 @@ set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 " vim +PluginInstall +qall
 
 " Add helptags for ctrlp
-" vim -c "helptags ~/.vim/bundle/ctrlp.vim/doc" -q
+" vim -c "helptags ~/.vim/bundle/ctrlp.vim/doc" -qall
 
-" Install ctags and create tags for OmniCppComplete
-" sudo apt-get install exuberant-ctags
+" Create tags for OmniCppComplete
 "
 " Linux
-" cd ~/.vim/tags
-" ctags -o tags -R --c++-kinds=+p --fields=+iaS --extra=+q /usr/include
-"
+" ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ -f ~/.vim/tags/cpp /usr/include/c++
+" ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ -f ~/.vim/tags/gl /usr/include/GL
+" ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ -f ~/.vim/tags/qt4 /usr/include/qt4
+" ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ -f ~/.vim/tags/sdl /usr/include/sdl
+
 " Windows
 " ctags -o tags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ C:\MinGW\include
 " ctags -o tags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ C:\MinGW\lib\gcc\mingw32\4.8.1\include

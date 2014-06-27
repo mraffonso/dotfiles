@@ -1,7 +1,3 @@
-" Candy
-" Color scheme ( background is black ).
-Plugin 'candy.vim'
-
 " GitHub
 " A gvim colorscheme based on github's syntax highlighting.
 Plugin 'github-theme'
