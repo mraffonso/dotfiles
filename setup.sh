@@ -18,6 +18,7 @@ show_help() {
   echo "all"
   echo "git"
   echo "hg"
+  echo "ruby-gems"
   echo "vim"
   echo
 }
@@ -130,7 +131,7 @@ elif [ $# -eq 1 ]; then
       hg
       exit 0
     ;;
-    "ruby_gems")
+    "ruby-gems")
       ruby_gems
       exit 0
     ;;
