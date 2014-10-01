@@ -12,12 +12,13 @@ show_help() {
   fi
   echo "setup.sh - Dotfile setup manager"
   echo
-  echo "Usage: setup.sh {scope}"
+  echo "Usage: setup.sh {package}"
   echo
-  echo "Scopes:"
+  echo "Packages:"
   echo "all"
   echo "git"
   echo "hg"
+  echo "rails"
   echo "ruby-gems"
   echo "vim"
   echo
@@ -87,6 +88,11 @@ hg() {
   echo
 }
 
+rails() {
+  echo "--rails--"
+  install_file "railsrc" ".railsrc"
+}
+
 ruby_gems() {
   echo "-- ruby gems --"
   install_file "gemrc" ".gemrc"
@@ -109,6 +115,7 @@ vim() {
 all() {
   git
   hg
+  rails
   ruby_gems
   tmux
   vim
@@ -129,6 +136,10 @@ elif [ $# -eq 1 ]; then
     ;;
     "hg")
       hg
+      exit 0
+    ;;
+    "rails")
+      rails
       exit 0
     ;;
     "ruby-gems")
