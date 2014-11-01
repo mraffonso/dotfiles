@@ -18,6 +18,7 @@ show_help() {
   echo "all"
   echo "git"
   echo "hg"
+  echo "oh-my-zsh"
   echo "rails"
   echo "ruby-gems"
   echo "vim"
@@ -88,9 +89,16 @@ hg() {
   echo
 }
 
+oh_my_zsh() {
+  echo "-- oh-my-zsh --"
+  install_dir "oh-my-zsh" ".oh-my-zsh"
+  echo
+}
+
 rails() {
   echo "--rails--"
   install_file "railsrc" ".railsrc"
+  echo
 }
 
 ruby_gems() {
@@ -101,7 +109,7 @@ ruby_gems() {
 
 tmux() {
   echo "-- tmux --"
-  echo "Nothing to do yet"
+  echo "Oops... Nothing to do yet"
   echo
 }
 
@@ -115,6 +123,7 @@ vim() {
 all() {
   git
   hg
+  oh_my_zsh
   rails
   ruby_gems
   tmux
@@ -136,6 +145,10 @@ elif [ $# -eq 1 ]; then
     ;;
     "hg")
       hg
+      exit 0
+    ;;
+    "oh-my-zsh")
+      oh_my_zsh
       exit 0
     ;;
     "rails")
