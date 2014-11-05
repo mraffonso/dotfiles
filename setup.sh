@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# setup.ssh -- Dotfile setup manager
+# setup.sh -- Dotfile setup manager
 
 CWD=$(pwd)
 INSTDIR=$HOME
@@ -21,6 +21,7 @@ show_help() {
   echo "oh-my-zsh"
   echo "rails"
   echo "ruby-gems"
+  echo "tmux"
   echo "vim"
   echo
 }
@@ -109,7 +110,7 @@ ruby_gems() {
 
 tmux() {
   echo "-- tmux --"
-  echo "Oops... Nothing to do yet"
+  install_file "tmux.conf" ".tmux.conf"
   echo
 }
 
