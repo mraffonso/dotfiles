@@ -123,6 +123,9 @@ nnoremap JJJJ <Nop>
 inoremap JJ <ESC>
 nnoremap JJJJ <Nop>
 
+" Remap a to A in command mode
+noremap a A
+
 " ======================= Statusbar =======================
 
 set laststatus=2
