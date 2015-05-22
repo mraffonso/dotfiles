@@ -109,6 +109,12 @@ ruby_gems() {
 }
 
 tmux() {
+  echo "-- subl --"
+  install_dir "config/sublime-text-3" "config/sublime-text-3"
+  echo
+}
+
+tmux() {
   echo "-- tmux --"
   install_file "tmux.conf" ".tmux.conf"
   echo
@@ -158,6 +164,10 @@ elif [ $# -eq 1 ]; then
     ;;
     "ruby-gems")
       ruby_gems
+      exit 0
+    ;;
+    "subl")
+      subl
       exit 0
     ;;
     "tmux")
