@@ -21,6 +21,7 @@ show_help() {
   echo "oh-my-zsh"
   echo "rails"
   echo "ruby-gems"
+  echo "subl"
   echo "tmux"
   echo "vim"
   echo
@@ -108,9 +109,9 @@ ruby_gems() {
   echo
 }
 
-tmux() {
+subl() {
   echo "-- subl --"
-  install_dir "config/sublime-text-3" "config/sublime-text-3"
+  install_dir "config/sublime-text-3" ".config/sublime-text-3"
   echo
 }
 
