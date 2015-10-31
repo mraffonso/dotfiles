@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# reload -- Prevent accidental reloading of X
+
+echo "Overidden to prevent accidental reloading of X"
+echo
+echo "The original command can be found at: "
+echo
+whereis reload
+echo
+

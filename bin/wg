@@ -1,0 +1,64 @@
+#!/bin/sh
+
+# wg - Wget stuff
+
+CWD=$(pwd)
+
+show_help() {
+  if [ $# -eq 1 ]; then
+    echo $1
+    echo
+  fi
+  echo "wg - Wget stuff"
+  echo
+  echo "Usage: wg <command> [options]"
+  echo
+  echo "Commands:"
+  echo
+  echo "website"
+  echo "Usage: wg website [url]"
+  echo
+}
+
+wget_website() {
+  url=$1
+  echo $url
+  wget \
+    --recursive \
+    --page-requisites \
+    --html-extension \
+    --convert-links \
+    --no-parent \
+    "$1"
+}
+
+if [ $# -lt 1 ]; then
+  show_help "Error: Invalid syntax!"
+  exit 1
+elif [ $# -eq 1 ]; then
+  case "$1" in
+    "help")
+      show_help
+      exit 0
+    ;;
+    *)
+      show_help "Error: Unknown command or missing options!"
+      exit 1
+    ;;
+  esac
+elif [ $# -eq 2 ]; then
+  case "$1" in
+    "website")
+      wget_website "$2"
+      exit 0
+    ;;
+    *)
+      show_help "Error: Unknown command!"
+      exit 1
+    ;;
+  esac
+elif [ $# -gt 2 ]; then
+  show_help "Error: Invalid syntax!"
+  exit 1
+fi
+
