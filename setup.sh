@@ -15,16 +15,19 @@ show_help() {
   echo "Usage: setup.sh {package}"
   echo
   echo "Packages:"
-  echo "all"
-  echo "git"
-  echo "hg"
-  echo "oh-my-zsh"
-  echo "rails"
-  echo "ruby-gems"
-  echo "subl"
-  echo "tmux"
-  echo "vim"
+  echo "all          -- Meta: Install all Linux packages"
   echo
+  echo "git          -- Pkg:  Install Git config"
+  echo "hg           -- Pkg:  Install Mercurial config"
+  echo "oh-my-zsh    -- Pkg:  Install oh-my-zsh config"
+  echo "rails        -- Pkg:  Install Rails config"
+  echo "ruby-gems    -- Pkg:  Install Ruby Gems config"
+  echo "subl         -- Pkg:  Install Sublime Text 3 config"
+  echo "tmux         -- Pkg:  Install tmux config"
+  echo "vim          -- Pkg:  Install vim config"
+  echo "win-bin      -- Pkg:  Install custom Windows scripts"
+  echo "win-git-bash -- Pkg:  Install Git Bash config for Windows"
+  echo "win-subl     -- Pkg:  Install Sublime Text 3 config"
 }
 
 file_exists() {
@@ -36,7 +39,7 @@ file_exists() {
 }
 
 dir_exists() {
-  if [ -d $1 ]; then
+  if [ -d "$1" ]; then
     return 0
   else
     return 1
@@ -128,12 +131,31 @@ vim() {
   echo
 }
 
+win_bin() {
+  echo "-- win-bin --"
+  install_dir "win-bin" "bin"
+  echo
+}
+
+win_git_bash() {
+  echo "-- win git bash --"
+  install_file "win-bashrc" ".bashrc"
+  echo
+}
+
+win_subl() {
+  echo "-- win subl --"
+  install_dir "config/sublime-text-3" "AppData/Roaming/Sublime Text 3"
+  echo
+}
+
 all() {
   git
   hg
   oh_my_zsh
   rails
   ruby_gems
+  subl
   tmux
   vim
 }
@@ -177,6 +199,18 @@ elif [ $# -eq 1 ]; then
     ;;
     "vim")
       vim
+      exit 0
+    ;;
+    "win-bin")
+      win_bin
+      exit 0
+    ;;
+    "win-git-bash")
+      win_git_bash
+      exit 0
+    ;;
+    "win-subl")
+      win_subl
       exit 0
     ;;
     *)
