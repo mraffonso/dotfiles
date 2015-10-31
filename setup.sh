@@ -82,6 +82,17 @@ install_dir() {
   fi
 }
 
+create_symlink() {
+  echo "Creating symlink $2 -> $1"
+  ln -s $1 $2
+}
+
+bin() {
+  echo "-- bin --"
+  create_symlink "$CWD/bin" "$HOME/bin"
+  echo
+}
+
 git() {
   echo "-- git --"
   install_file "gitconfig" ".gitconfig"
@@ -150,6 +161,7 @@ win_subl() {
 }
 
 all() {
+  bin
   git
   hg
   oh_my_zsh
@@ -167,6 +179,10 @@ elif [ $# -eq 1 ]; then
   case "$1" in
     "all")
       all
+      exit 0
+    ;;
+    "bin")
+      bin
       exit 0
     ;;
     "git")
