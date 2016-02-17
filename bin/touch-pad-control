@@ -1,0 +1,60 @@
+#!/bin/sh
+
+display_usage()
+{
+	# If there's an argument, show an error message
+	if [ $# -eq 1 ]; then
+		echo "Error: $1"
+		echo
+	fi
+	echo "Usage: touch-pad-control \"Device Name\" (enable|disable)"
+	echo
+  exit $#
+}
+
+get_device_by_name()
+{
+  return `xinput --list | egrep "slave *pointer" | grep "$name" | sed -e 's/^.*id=//' -e 's/\s.*$//'`
+}
+
+exec_stuff()
+{
+  local id=$1
+  local mode=$2
+  if [ "$mode" = "enable" ]; then
+    xinput set-prop $id "Device Enabled" 1
+  elif [ "$mode" = "disable" ]; then
+    xinput set-prop $id "Device Enabled" 0
+  else
+    display_usage "Unknown command"
+    return 1
+  fi
+  return 0
+}
+
+main()
+{
+	local name="$1"
+	local mode="$2"
+	get_device_by_name "$name"; id=$?
+  if [ $id -eq "0" ]; then
+    echo "Could not find specified device."
+  else
+    echo "Found device id $id"
+    exec_stuff $id $mode
+    ecode=$?
+    if [ $ecode -eq 0 ]; then
+      echo "$mode $name succeeded!"
+    else
+      echo "$mode $name failed!"
+    fi
+    exit $ecode
+  fi
+}
+
+# If there's an argument, run main, else display help
+if [ $# -eq 2 ]; then
+	main "$1" "$2"
+else
+	display_usage "Missing arguments"
+fi
