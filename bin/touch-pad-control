@@ -2,7 +2,7 @@
 
 display_usage()
 {
-	if [ $# -eq 1 ]; then # If there's an argument, show an error message
+	if [ $# -eq 1 ]; then
 		echo "Error: $1"
 		echo
 	fi
@@ -14,18 +14,16 @@ display_usage()
 	echo "    disable"
 	echo "    find"
 
-	exit $# # Exit with status 1, if error message is supplied
+	exit $#
 }
 
 get_id_by_name()
 {
-	# Try to get an id and return the value (0 returned if no result is found)
 	id=$(xinput --list | egrep "slave *pointer" | grep "$search_name" | sed -e 's/^.*id=//' -e 's/\s.*$//')
 }
 
 get_name_by_id()
 {
-	# Try to get a name and return the value ("" returned if no result is found)
 	name=$(xinput --list | egrep "slave *pointer" | grep "id=$id" | sed 's/⎜ *.↳ //g' | cut -f 1 | sed 's/\s*$//g')
 }
 
@@ -34,11 +32,13 @@ find_device()
 	echo "Searching for: \"$search_name\""
 	get_id_by_name
 
-	if [ $id -ne 0 ]; then
+	if [ "$id" != "" ] && [ $id -ne 0 ]; then
 		get_name_by_id
 		echo "Found \"$name\" with id $id"
+	else
+		echo "Unable to find device matching \"$search_name\""
+		exit 1
 	fi
-	return $id
 }
 
 toggle_device()
@@ -75,7 +75,6 @@ main()
 	fi
 }
 
-# If there's an argument, run main, else display usage
 if [ $# -eq 2 ]; then
 	main "$1" "$2"
 else
