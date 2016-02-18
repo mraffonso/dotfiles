@@ -10,12 +10,17 @@ Installs .gitconfig file.
 
 **Action required**: Set email address.
 
-Hg
+Mercurial
 --
 
 Installs .hgrc file.
 
 **Action required**: Set email address.
+
+NeoVim
+------
+
+Symlinks .vimrc file.
 
 Rails
 -----
