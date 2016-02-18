@@ -3,7 +3,6 @@
 # setup.sh -- Dotfile setup manager
 
 CWD=$(pwd)
-INSTDIR=$HOME
 
 show_help() {
   if [ $# -eq 1 ]; then
@@ -50,18 +49,19 @@ install_file() {
   # $1 = filename, $2 = target
   if [ $# -eq 2 ]; then
     if file_exists "$CWD/$1"; then
-      base=`dirname $2`
+      base=`dirname $HOME/$2`
       # file has a base, ensure it's created
       if [ "$base" != "." ]; then
         mkdir -p "$base"
       fi
       echo "Install file: $2"
-      cp "$CWD/$1" "$INSTDIR/$2"
+      cp "$CWD/$1" "$HOME/$2"
     else
       echo "*skipping: $1"
     fi
   else
     echo "install_file() requires 2 parameters (filename, target)"
+    exit 1
   fi
 }
 
@@ -69,12 +69,12 @@ install_dir() {
   # $1 = dirname, $2 = target
   if [ $# -eq 2 ]; then
     if dir_exists "$CWD/$1"; then
-      if dir_exists "$INSTDIR/$2"; then
+      if dir_exists "$HOME/$2"; then
         echo "Update dir: $2"
-        cp -R "$CWD/$1/." "$INSTDIR/$2/"
+        cp -R "$CWD/$1/." "$HOME/$2/"
       else
         echo Install dir: $2
-        cp -R "$CWD/$1" "$INSTDIR/$2"
+        cp -R "$CWD/$1" "$HOME/$2"
       fi
     fi
   else
@@ -84,79 +84,79 @@ install_dir() {
 
 create_symlink() {
   echo "Creating symlink $2 -> $1"
-  ln -s $1 $2
+  ln -s $HOME/$1 $HOME/$2
 }
 
 bin() {
   echo "-- bin --"
-  create_symlink "$CWD/bin" "$HOME/bin"
+  create_symlink "bin" "bin"
   echo
 }
 
 git() {
   echo "-- git --"
-  install_file "gitconfig" ".gitconfig"
+  install_file "_gitconfig" ".gitconfig"
   echo
 }
 
 hg() {
   echo "-- hg --"
-  install_file "hgrc" ".hgrc"
+  install_file "_hgrc" ".hgrc"
   echo
 }
 
 oh_my_zsh() {
   echo "-- oh-my-zsh --"
-  install_dir "oh-my-zsh" ".oh-my-zsh"
+  install_dir "_oh-my-zsh" ".oh-my-zsh"
   echo
 }
 
 rails() {
   echo "--rails--"
-  install_file "railsrc" ".railsrc"
+  create_symlink "_railsrc" ".railsrc"
   echo
 }
 
 ruby_gems() {
   echo "-- ruby gems --"
-  install_file "gemrc" ".gemrc"
+  create_symlink "_gemrc" ".gemrc"
   echo
 }
 
 subl() {
   echo "-- subl --"
-  install_dir "config/sublime-text-3" ".config/sublime-text-3"
+  install_dir "_config/sublime-text-3" ".config/sublime-text-3"
   echo
 }
 
 tmux() {
   echo "-- tmux --"
-  install_file "tmux.conf" ".tmux.conf"
+  create_symlink "_tmux.conf" ".tmux.conf"
   echo
 }
 
 vim() {
   echo "-- vim --"
-  install_file "vimrc" ".vimrc"
-  install_dir "vim" ".vim"
+  create_symlink "_vimrc" ".vimrc"
+  create_symlink "_vim" ".vim"
   echo
 }
 
 win_bin() {
   echo "-- win-bin --"
-  install_dir "win-bin" "bin"
+  install_dir "win_bin" "bin"
   echo
 }
 
 win_git_bash() {
   echo "-- win git bash --"
-  install_file "win-bashrc" ".bashrc"
+  create_symlink "win_bashrc" ".bashrc"
   echo
 }
 
 win_subl() {
   echo "-- win subl --"
-  install_dir "config/sublime-text-3" "AppData/Roaming/Sublime Text 3"
+  install_dir "_config/sublime-text-3" "AppData/Roaming/Sublime Text 3"
   echo
 }
 
@@ -238,4 +238,3 @@ elif [ $# -gt 1 ]; then
   show_help "Error: Invalid syntax!"
   exit 1
 fi
-

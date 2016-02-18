@@ -1,7 +1,9 @@
 [user]
 	name = Mario Affonso
 	email = email@address
+
 [color]
 	ui = true
+
 [alias]
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
