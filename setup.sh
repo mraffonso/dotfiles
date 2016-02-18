@@ -18,6 +18,7 @@ show_help() {
   echo
   echo "git          -- Pkg:  Install Git config"
   echo "hg           -- Pkg:  Install Mercurial config"
+  echo "nvim         -- Pkg:  Install NeoVim config"
   echo "oh-my-zsh    -- Pkg:  Install oh-my-zsh config"
   echo "rails        -- Pkg:  Install Rails config"
   echo "ruby-gems    -- Pkg:  Install Ruby Gems config"
@@ -45,11 +46,19 @@ dir_exists() {
   fi
 }
 
+symlink_exists() {
+  if [ -L $1 ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 install_file() {
   # $1 = filename, $2 = target
   if [ $# -eq 2 ]; then
     if file_exists "$CWD/$1"; then
-      base=`dirname $HOME/$2`
+      base=`dirname "$HOME/$2"`
       # file has a base, ensure it's created
       if [ "$base" != "." ]; then
         mkdir -p "$base"
@@ -83,8 +92,23 @@ install_dir() {
 }
 
 create_symlink() {
-  echo "Creating symlink $2 -> $1"
-  ln -s $HOME/$1 $HOME/$2
+  # $1 = filename, $2 = target
+  if [ $# -eq 2 ]; then
+    if file_exists "$CWD/$1"; then
+      base=`dirname "$HOME/$2"`
+      # file has a base, ensure it's created
+      if [ "$base" != "." ]; then
+        mkdir -p "$base"
+      fi
+      echo "Creating symlink $2 -> $1"
+      ln -s "$HOME/$1" "$HOME/$2"
+    else
+      echo "*skipping: $1"
+    fi
+  else
+    echo "create_symlink() requires 2 parameters (filename, target)"
+    exit 1
+  fi
 }
 
 bin() {
@@ -102,6 +126,12 @@ git() {
 hg() {
   echo "-- hg --"
   install_file "_hgrc" ".hgrc"
+  echo
+}
+
+nvim() {
+  echo "-- neovim --"
+  create_symlink "_vimrc" ".config/nvim/init.vim"
   echo
 }
 
@@ -164,6 +194,7 @@ all() {
   bin
   git
   hg
+  nvim
   oh_my_zsh
   rails
   ruby_gems
@@ -191,6 +222,10 @@ elif [ $# -eq 1 ]; then
     ;;
     "hg")
       hg
+      exit 0
+    ;;
+    "nvim")
+      nvim
       exit 0
     ;;
     "oh-my-zsh")
