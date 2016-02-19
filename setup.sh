@@ -94,16 +94,11 @@ install_dir() {
 create_symlink() {
   # $1 = filename, $2 = target
   if [ $# -eq 2 ]; then
-    if file_exists "$CWD/$1"; then
-      base=`dirname "$HOME/$2"`
-      # file has a base, ensure it's created
-      if [ "$base" != "." ]; then
-        mkdir -p "$base"
-      fi
-      echo "Creating symlink $2 -> $1"
-      ln -s "$HOME/$1" "$HOME/$2"
+    if symlink_exists "$HOME/$2"; then
+      echo "Symlink exists **skipping: $1"
     else
-      echo "*skipping: $1"
+      echo "Creating symlink $2 -> $1"
+      ln -s "$CWD/$1" "$HOME/$2"
     fi
   else
     echo "create_symlink() requires 2 parameters (filename, target)"
@@ -161,7 +156,8 @@ subl() {
 
 tmux() {
   echo "-- tmux --"
-  create_symlink "_tmux.conf" ".tmux.conf"
+  create_symlink "_tmux/" ".tmux"
+  create_symlink "_tmux/tmux.conf" ".tmux.conf"
   echo
 }
 
@@ -174,7 +170,7 @@ vim() {
 
 win_bin() {
   echo "-- win-bin --"
-  install_dir "win_bin" "bin"
+  create_symlink "win_bin" "bin"
   echo
 }
 
