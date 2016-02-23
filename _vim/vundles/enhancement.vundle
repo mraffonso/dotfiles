@@ -1,0 +1,2 @@
+" vim-gitgutter - A Vim plugin which shows a git diff in teh gutter and stages/reverts hunks
+Plugin 'airblade/vim-gitgutter'

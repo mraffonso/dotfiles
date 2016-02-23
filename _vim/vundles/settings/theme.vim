@@ -1,3 +1,3 @@
 " Set a theme
-colorscheme github
+colorscheme torte
 

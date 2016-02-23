@@ -1,4 +1,4 @@
-"                   _ _        
+"                   _ _
 " __ ___  _ _ _  __| | |___ ___
 " \ V / || | ' \/ _` | / -_|_-<
 "  \_/ \_,_|_||_\__,_|_\___/__/
@@ -19,9 +19,10 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " Split up vundles in ~/.vim/vundles/ to making editing easier.
+runtime completion.vundle
+runtime enhancement.vundle
 runtime project.vundle
 runtime theme.vundle
-runtime completion.vundle
 
 " ========================== End ==========================
 
