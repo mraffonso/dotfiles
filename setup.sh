@@ -30,6 +30,18 @@ show_help() {
   echo "win-subl     -- Pkg:  Install Sublime Text 3 config"
 }
 
+ask_yes_no() {
+  read -r -p "$1 [y/N] " response
+  case $response in
+    [yY][eE][sS]|[yY]) 
+      return 0
+      ;;
+    *)
+      return 1
+    ;;
+  esac
+}
+
 file_exists() {
   if [ -f $1 ]; then
     return 0
@@ -165,6 +177,12 @@ vim() {
   echo "-- vim --"
   create_symlink "_vimrc" ".vimrc"
   create_symlink "_vim" ".vim"
+  echo
+  if ask_yes_no "Do you want to run vim bootstrap?"; then
+    $HOME/.vim/setup/bootstrap.sh
+  else
+    echo "Please run ~/.vim/setup/bootstrap.sh manually."
+  fi
   echo
 }
 

@@ -2,3 +2,8 @@
 *.swo
 *~
 .netrwhist
+
+_vim/backups/*
+_vim/bundle/*
+_vim/viminfo
+
