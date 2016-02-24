@@ -19,3 +19,6 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 
 " Make enter key open files in new tabs, we use a plugin to prevent directories from opening in tabs
 let NERDTreeMapOpenInTab='<CR>'
+
+" Remove 'Press ? for help'
+let NERDTreeMinimalUI=1
