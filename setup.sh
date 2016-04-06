@@ -19,7 +19,7 @@ show_help() {
   echo "git          -- Pkg:  Symlink Git config"
   echo "hg           -- Pkg:  Install Mercurial config"
   echo "nvim         -- Pkg:  Install NeoVim config"
-  echo "oh-my-zsh    -- Pkg:  Install oh-my-zsh config"
+  echo "oh-my-zsh    -- Pkg:  Symlink OMZ and ZSH config"
   echo "rails        -- Pkg:  Symlink Rails config"
   echo "ruby-gems    -- Pkg:  Symlink Ruby Gems config"
   echo "subl         -- Pkg:  Install Sublime Text 3 config"
@@ -144,7 +144,8 @@ nvim() {
 
 oh_my_zsh() {
   echo "-- oh-my-zsh --"
-  install_dir "_oh-my-zsh" ".oh-my-zsh"
+  create_symlink "_oh-my-zsh/custom/plugins/mario" ".oh-my-zsh/custom/plugins/mario"
+  create_symlink "_zshrc" ".zshrc"
   echo
 }
 
