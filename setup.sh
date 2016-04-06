@@ -20,7 +20,7 @@ show_help() {
   echo "hg           -- Pkg:  Install Mercurial config"
   echo "nvim         -- Pkg:  Install NeoVim config"
   echo "oh-my-zsh    -- Pkg:  Install oh-my-zsh config"
-  echo "rails        -- Pkg:  Install Rails config"
+  echo "rails        -- Pkg:  Symlink Rails config"
   echo "ruby-gems    -- Pkg:  Symlink Ruby Gems config"
   echo "subl         -- Pkg:  Install Sublime Text 3 config"
   echo "tmux         -- Pkg:  Install tmux config"
