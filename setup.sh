@@ -16,7 +16,7 @@ show_help() {
   echo "Packages:"
   echo "all          -- Meta: Install all Linux packages"
   echo
-  echo "git          -- Pkg:  Install Git config"
+  echo "git          -- Pkg:  Symlink Git config"
   echo "hg           -- Pkg:  Install Mercurial config"
   echo "nvim         -- Pkg:  Install NeoVim config"
   echo "oh-my-zsh    -- Pkg:  Install oh-my-zsh config"
@@ -126,7 +126,7 @@ bin() {
 
 git() {
   echo "-- git --"
-  install_file "_gitconfig" ".gitconfig"
+  create_symlink "_gitconfig" ".gitconfig"
   echo
 }
 
