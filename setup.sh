@@ -169,7 +169,6 @@ subl() {
 
 tmux() {
   echo "-- tmux --"
-  create_symlink "_tmux/" ".tmux"
   create_symlink "_tmux/tmux.conf" ".tmux.conf"
   echo
 }
