@@ -15,6 +15,8 @@ show_help() {
   echo
   echo "Packages:"
   echo "all          -- Meta: Install all Linux packages"
+  echo "osx          -- Meta: Install all OS X packages"
+  echo "win          -- Meta: Install all Windows packages"
   echo
   echo "git          -- Pkg:  Symlink Git config"
   echo "hg           -- Pkg:  Install Mercurial config"
@@ -28,6 +30,7 @@ show_help() {
   echo "win-bin      -- Pkg:  Install custom Windows scripts"
   echo "win-git-bash -- Pkg:  Install Git Bash config for Windows"
   echo "win-subl     -- Pkg:  Install Sublime Text 3 config"
+  echo "osx-bin      -- Pkg:  Symlink bin directory"
 }
 
 ask_yes_no() {
@@ -138,6 +141,7 @@ hg() {
 
 nvim() {
   echo "-- neovim --"
+  mkdir -p $HOME/.config/nvim
   create_symlink "_vimrc" ".config/nvim/init.vim"
   echo
 }
@@ -217,6 +221,22 @@ all() {
   vim
 }
 
+osx_bin() {
+  echo "-- win bin --"
+  create_symlink "osx_bin" "bin"
+  echo
+}
+
+osx () {
+  osx_bin
+}
+
+win() {
+  win_bin
+  win_git_bash
+  win_subl
+}
+
 if [ $# -lt 1 ]; then
   show_help "Error: Invalid syntax!"
   exit 1
@@ -224,6 +244,14 @@ elif [ $# -eq 1 ]; then
   case "$1" in
     "all")
       all
+      exit 0
+    ;;
+    "osx")
+      osx
+      exit 0
+    ;;
+    "win")
+      win
       exit 0
     ;;
     "bin")
@@ -264,6 +292,10 @@ elif [ $# -eq 1 ]; then
     ;;
     "vim")
       vim
+      exit 0
+    ;;
+    "osx-bin")
+      osx_bin
       exit 0
     ;;
     "win-bin")

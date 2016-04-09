@@ -1,0 +1,48 @@
+#!/bin/sh
+
+display_usage()
+{
+	if [ $# -eq 1 ]; then
+		echo "Error: $1"
+		echo
+	fi
+
+	echo "Usage: show-all-files command"
+	echo
+	echo "Commands:"
+	echo "    true"
+	echo "    false"
+
+	exit $#
+}
+
+toggle_hidden_file_visibility()
+{
+	local value=$1
+	defaults write com.apple.Finder AppleShowAllFiles $value
+	killall Finder
+}
+
+main()
+{
+	case "$1" in
+		"true"|"yes")
+			toggle_hidden_file_visibility "YES"
+			exit 0
+		;;
+		"false"|"no")
+			toggle_hidden_file_visibility "NO"
+			exit 0
+		;;
+		*)
+			show_help "Error: Unknown command!"
+			exit 1
+		;;
+	esac
+}
+
+if [ $# -eq 1 ]; then
+	main "$1"
+else
+	display_usage "Missing arguments"
+fi
