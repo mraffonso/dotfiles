@@ -7,3 +7,4 @@ _vim/backups/*
 _vim/bundle/*
 _vim/viminfo
 
+.DS_Store
