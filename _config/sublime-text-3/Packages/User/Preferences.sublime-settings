@@ -1,14 +1,15 @@
 {
 	"auto_complete": true,
 	"auto_complete_commit_on_tab": true,
-	"copy_with_empty_selection": true,
+	"copy_with_empty_selection": false,
 	"ensure_newline_at_eof_on_save": true,
-	"font_size": 10,
+	"font_size": 11,
 	"ignored_packages":
 	[
 		"Markdown",
 		"Vintage"
 	],
+	"rulers": [ 79 ],
 	"index_files": true,
 	"tab_size": 2,
 	"translate_tabs_to_spaces": true,
@@ -18,4 +19,6 @@
 	// Disable auto-loading last project
 	"hot_exit": false,
 	"remember_open_files": false,
+
+	"color_scheme": "Packages/User/SublimeLinter/Monokai (SL).tmTheme",
 }
