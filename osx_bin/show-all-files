@@ -10,8 +10,8 @@ display_usage()
 	echo "Usage: show-all-files command"
 	echo
 	echo "Commands:"
-	echo "    true"
-	echo "    false"
+	echo "    y|yes|t|true|on"
+	echo "    n|no|f|false|off"
 
 	exit $#
 }
@@ -26,16 +26,16 @@ toggle_hidden_file_visibility()
 main()
 {
 	case "$1" in
-		"true"|"yes")
+		[yY]|[yY][eE][sS]|[tT]|[tT][rR][uU][eE]|[oO][nN])
 			toggle_hidden_file_visibility "YES"
 			exit 0
 		;;
-		"false"|"no")
+		[nN]|[nN][oO]|[fF]|[fF][aA][lL][sS][eE]|[oO][fF][fF])
 			toggle_hidden_file_visibility "NO"
 			exit 0
 		;;
 		*)
-			show_help "Error: Unknown command!"
+			display_usage "Error: Unknown command!"
 			exit 1
 		;;
 	esac
