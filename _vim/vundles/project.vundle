@@ -1,14 +1,3 @@
 " ctrlp - Full path fuzzy file, buffer, mru, tag, ... finder for Vim
 Plugin 'ctrlpvim/ctrlp.vim'
 
-" nerdtree - A tree explorer plugin for vim
-Plugin 'scrooloose/nerdtree'
-
-" nerdtree-git-plugin - A plugin of NERDTree showing git status
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-
-" vim-nerdtree-tabs - NERDTree and tabs together in VIm, painlessly
-Plugin 'jistr/vim-nerdtree-tabs'
-
-" vim-nerdtree-direnter - Fix for vim NERDTree to not open directory in new tab
-Plugin 'Nopik/vim-nerdtree-direnter'
