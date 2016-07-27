@@ -106,3 +106,6 @@ HELPDIR=/usr/local/share/zsh/help
 #     chmod go-w '/usr/local/share'
 
 fpath=(/usr/local/share/zsh-completions $fpath)
+
+# Load profile
+source $HOME/.profile
