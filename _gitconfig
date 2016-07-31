@@ -8,4 +8,5 @@
 [alias]
   lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
   alias = config --get-regexp alias
+  co = checkout
   hard-reset = ! git reset --hard && git clean -f -d
