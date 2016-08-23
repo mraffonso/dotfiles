@@ -1,13 +1,16 @@
-[user]
-	name = Mario Affonso
-	email = mario@thecodebeach.com
-
-[color]
-	ui = true
-
 [alias]
   alias = config --get-regexp alias
   b = branch
   co = checkout
   hard-reset = ! git reset --hard && git clean -f -d
   lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
+
+[color]
+  ui = true
+
+[core]
+	excludesfile = ~/.gitignore_global
+
+[user]
+  name = Mario Affonso
+  email = mario@thecodebeach.com

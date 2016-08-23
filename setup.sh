@@ -18,7 +18,7 @@ show_help() {
   echo "osx          -- Meta: Install all OS X packages"
   echo "win          -- Meta: Install all Windows packages"
   echo
-  echo "git          -- Pkg:  Symlink Git config"
+  echo "git          -- Pkg:  Symlink Git configs"
   echo "hg           -- Pkg:  Install Mercurial config"
   echo "nvim         -- Pkg:  Install NeoVim config"
   echo "oh-my-zsh    -- Pkg:  Symlink OMZ and ZSH config"
@@ -36,7 +36,7 @@ show_help() {
 ask_yes_no() {
   read -r -p "$1 [y/N] " response
   case $response in
-    [yY][eE][sS]|[yY]) 
+    [yY][eE][sS]|[yY])
       return 0
       ;;
     *)
@@ -130,6 +130,7 @@ bin() {
 git() {
   echo "-- git --"
   create_symlink "_gitconfig" ".gitconfig"
+  create_symlink "_gitignore_global" ".gitignore_global"
   echo
 }
 
