@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# stop-puma-dev -- stops puma-dev apps using USR1 signal
+
+echo "Stopping puma-dev apps ..."
+
+pkill -USR1 puma-dev
+
+if [ "$?" = "0" ]; then
+  echo "puma-dev apps stopped :)"
+else
+  echo "Danger Will Robinson!  Something went wrong!"
+fi
+
