@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# reset-puma-dev -- Kill puma-dev processes to force reload of services
-
-/usr/bin/pkill -USR1 puma-dev
