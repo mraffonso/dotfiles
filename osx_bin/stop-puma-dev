@@ -1,28 +1,70 @@
 #!/bin/sh
 
-# stop-puma-dev -- stops puma-dev apps using USR1 signal
+# stop-puma-dev -- stops puma-dev servers and related processes
 
-echo "Stopping puma-dev apps ..."
+# This script will stop puma-dev apps by sending the USR1 signal,
+# however the main puma-dev process will continue to run.
+# It will also stop fsevent_watch processes by sending the HUP signal.
 
-pkill -USR1 puma-dev
+detect_running_processes()
+{
+  PROCNAME=$1
+  ps cax | grep $PROCNAME > /dev/null
+  return $?
+}
 
-if [ "$?" = "0" ]; then
-  echo "  puma-dev apps stopped :)"
-else
-  echo "  Danger Will Robinson!  Something went wrong!"
-fi
+stop_puma_dev()
+{
+  echo "... Stopping puma-dev apps"
 
-echo
+  pkill -USR1 puma-dev
 
-echo "Sopping fsevent_watch (cuasing: resources temporarily unavailable)"
+  if [ "$?" = "0" ]; then
+    echo "... puma-dev apps stopped :)"
+  else
+    echo "... Danger Will Robinson!  Something went wrong!"
+  fi
 
-pkill -HUP fsevent_watch
+  echo
+}
 
-if [ "$?" = "0" ]; then
-  echo "  fsevent_watch processes stopped :)"
-else
-  echo "  Oops.. something went wrong!"
-fi
+stop_fsevent_watch()
+{
+  echo "... Stopping fsevent_watch (cuasing: resources temporarily unavailable)"
 
-echo
+  pkill -HUP fsevent_watch
 
+  if [ "$?" = "0" ]; then
+    echo "... fsevent_watch processes stopped :)"
+  else
+    echo "... Oops.. something went wrong!"
+  fi
+
+  echo
+}
+
+main()
+{
+  echo "Detecting puma-dev processes ..."
+
+  if detect_running_processes "puma-dev"; then
+    echo "... Detected puma-dev"
+    stop_puma_dev
+  else
+    echo "... puma-dev is not running"
+  fi
+
+  echo "Detecting fsevent_watch processes ..."
+
+  if detect_running_processes "fsevent_watch"; then
+    echo "... Detected fsevent_watch"
+    stop_fsevent_watch
+  else
+    echo "... fsevent_watch is not running"
+  fi
+
+  echo
+
+}
+
+main
