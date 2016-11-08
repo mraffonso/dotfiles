@@ -1,7 +1,7 @@
 #!/bin/sh
 
 SP_VERSION="0.0.1"
-SP_AUTHOR=
+SP_AUTHOR="Mario Affonso"
 SP_HOST=""
 SP_PORT=7776
 
