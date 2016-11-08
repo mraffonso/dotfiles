@@ -1,0 +1,97 @@
+#!/bin/sh
+
+SP_VERSION="0.0.1"
+SP_AUTHOR=
+SP_HOST=""
+SP_PORT=7776
+
+start_ssh_proxy() {
+  echo "Starting SSH SOCKS 4/5 Proxy ..."
+  ssh -f -N -D $2 $1
+  if [ $? -gt 0 ]; then
+    echo "... Failed! Something went wrong."
+  else
+    echo "... Success!"
+  fi
+  echo
+}
+
+stop_ssh_proxy() {
+  echo "Stopping SSH SOCKS 4/5 Proxy ..."
+  echo
+  echo "Using 'pkill ssh' because I haven't investigated a better way to handle this."
+  echo "Please note that it will kill other active ssh processes"
+  echo
+  echo "Manual confirmation "
+  while true; do
+    read -p "Do you wish to stop SSH processes? (y/n) " yn
+    case $yn in
+      [Yy]* ) pkill ssh; break
+      ;;
+      [Nn]* ) exit
+      ;;
+      * ) echo "Please answer yes or no."
+      ;;
+    esac
+  done
+  echo
+}
+
+ssh_proxy_status() {
+  echo "This feature is not yet implemented."
+  echo
+}
+
+display_title() {
+  echo "sshproxy v$SP_VERSION by $SP_AUTHOR"
+  echo
+}
+
+display_help() {
+  display_title
+  if [ $# -eq 1 ]; then
+    echo "Error: $1."
+  fi
+  echo
+  echo "Syntax: sshproxy start {HOST} {PORT}"
+  echo
+  echo "Commands:"
+  echo "  start  -- starts a ssh proxy"
+  echo "  stop   -- stops a running ssh proxy"
+  echo "  status -- Displays the status of sshproxy"
+  echo
+}
+
+if [ $# -eq 2 ]; then
+  case $1 in
+    "start")
+      start_ssh_proxy $2 $SP_PORT
+    ;;
+    "stop")
+      display_help "'stop' does not take an argument"
+    ;;
+    "status")
+      display_help "'status' coes not take an argument"
+    ;;
+    *)
+      display_help "Unknown command"
+    ;;
+  esac
+elif [ $# -eq 1 ]; then
+  case $1 in
+    "start")
+      display_help "Missing host"
+    ;;
+    "stop")
+      stop_ssh_proxy
+    ;;
+    "status")
+      ssh_proxy_status
+    ;;
+    *)
+      display_help "Unknown command"
+    ;;
+  esac
+else
+  display_help "Invalid syntax"
+fi
