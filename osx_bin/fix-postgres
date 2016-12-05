@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# fix-postgres -- Fixes stuck instance of PostgreSQL
+
+POSTMASTER_PID=/usr/local/var/postgres/postmaster.pid
+
+# Stop Postgres if its running
+echo ".. Ensure postgres is stopped"
+brew services stop postgresql
+
+# Remove postmaster.pid
+echo ".. Removing $POSTMASTER_PID"
+rm $POSTMASTER_PID
+
+# Start postgres
+echo ".. Start postgres service"
+brew services start postgresql
+
+echo "Done!"
+echo
