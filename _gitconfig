@@ -4,6 +4,7 @@
   co = checkout
   hard-reset = ! git reset --hard && git clean -f -d
   lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  recommit = commit --amend
 
 [color]
   ui = true
