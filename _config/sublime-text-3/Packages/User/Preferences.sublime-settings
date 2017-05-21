@@ -1,24 +1,73 @@
 {
+	"Seti_SB_big": true,
+	"Seti_SB_bright": true,
+	"Seti_alt_tree_row": true,
+	"Seti_blue_label": true,
+	"Seti_bold_slctdtab_labels": false,
+	"Seti_no_blue_bar": false,
+	"Seti_no_scroll_icons": true,
+	"Seti_orange_button": true,
+	"Seti_sb_small_padding": true,
+	"Seti_sb_tree_miny": true,
+	"Seti_show_group_arrows": false,
+	"Seti_tab_font_12": true,
+	"Seti_tabs_small": true,
 	"auto_complete": true,
 	"auto_complete_commit_on_tab": true,
+	"binary_file_patterns":
+	[
+		"*.jpg",
+		"*.jpeg",
+		"*.png",
+		"*.gif",
+		"*.ttf",
+		"*.tga",
+		"*.dds",
+		"*.ico",
+		"*.eot",
+		"*.pdf",
+		"*.swf",
+		"*.jar",
+		"*.zip"
+	],
+	"caret_extra_bottom": 1,
+	"caret_extra_top": 1,
+	"caret_extra_width": 1,
+	"caret_style": "blink",
+	"color_scheme": "Packages/User/SublimeLinter/1337 (SL).tmTheme",
 	"copy_with_empty_selection": false,
 	"ensure_newline_at_eof_on_save": true,
-	"font_size": 11,
+	"folder_exclude_patterns":
+	[
+		".svn",
+		".git",
+		".hg",
+		"CVS",
+		"tmp",
+		"log",
+		"node_modules"
+	],
+	"font_size": 10,
+	"highlight_line": true,
+	"hot_exit": false,
 	"ignored_packages":
 	[
 		"Markdown",
 		"Vintage"
 	],
-	"rulers": [ 79 ],
 	"index_files": true,
+	"line_padding_bottom": 1,
+	"line_padding_top": 1,
+	"mouse_wheel_tabswitch": false,
+	"overlay_scroll_bars": "enabled",
+	"remember_open_files": false,
+	"rulers":
+	[
+		79
+	],
 	"tab_size": 2,
+	"theme": "Seti_orig.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
-	"word_wrap": true,
-
-	// Disable auto-loading last project
-	"hot_exit": false,
-	"remember_open_files": false,
-
-	"color_scheme": "Packages/User/SublimeLinter/Monokai (SL).tmTheme",
+	"word_wrap": true
 }
