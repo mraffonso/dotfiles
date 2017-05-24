@@ -1,13 +1,14 @@
 #!/bin/sh
 
 META_NAME="SSHCrypt"
-META_COMMAND="sshcrypt.sh"
-META_VERSION="0.0.1"
+META_COMMAND="sshcrypt"
+META_VERSION="0.0.2"
 META_AUTHOR="Mario Affonso"
 
 PRIVATE_KEY=$HOME/.ssh/id_rsa
 PUBLIC_KEY=$HOME/.ssh/id_rsa.pub
 PEM_FILE=$HOME/.ssh/id_rsa.pub.pem
+output_filename="encrypted_text.enc"
 
 display_error() {
   echo "Error: $1."
@@ -16,21 +17,35 @@ display_error() {
 display_help() {
   display_title
   if [ $# -eq 1 ]; then
-    display_error $1
+    display_error "$1"
   fi
   echo
-  echo "Syntax: $META_COMMAND [cmmand] [subcommand] [filename]"
+  echo "Syntax: $META_COMMAND [cmmand] {filename}"
   echo
   echo "Commands:"
-  echo "  setup                          -- Ensure requirements are met"
-  echo "  encrypt [file|text] [filename] -- Encrypts a file or text"
-  echo "  decrypt [file|text] [filename] -- Encrypts a file"
+  echo "  setup              -- Ensure requirements are met"
+  echo "  encrypt {filename} -- Encrypts a file or text (no filename)"
+  echo "  decrypt filename   -- Decrypts a file"
   echo
 }
 
 display_title() {
   echo "$META_NAME v$META_VERSION by $META_AUTHOR"
   echo
+}
+
+set_output_filename() {
+  ext=$(echo "$1" | awk -F . '{if (NF>1) {print $NF}}')
+  base=$(basename $1 ".$ext")
+  current_base=$base
+  current_id=1;
+  if [ -f "$1" ]; then
+    while [ -f "$current_base.$ext" ]; do
+      current_id=$(($current_id+1))
+      current_base="$base$current_id"
+    done
+  fi
+  output_filename="$current_base.$ext"
 }
 
 setup_pem_file() {
@@ -84,22 +99,6 @@ setup_sshcrypt() {
   fi
 }
 
-ssh_decrypt_text() {
-  echo "This functionality is not yet working."
-}
-
-ssh_encrypt_text() {
-  echo "Enter your message. (^d to stop typing)"
-  enc_filename=encrypted_text.enc
-  cat | openssl rsautl -encrypt -pubin -inkey $PEM_FILE > $enc_filename
-    if [ $? -eq 0 ]; then
-      echo " - OK"
-      echo "Saved file to : $enc_filename"
-  else
-      echo " - FAIL"
-  fi
-}
-
 ssh_decrypt_file() {
   printf "File exists ... "
   if [ -f $1 ]; then
@@ -116,6 +115,9 @@ ssh_decrypt_file() {
       echo "Done"
     else
       echo "Failed"
+      if [ -f $new_filename ]; then
+        rm $new_filename
+      fi
     fi
   else
     echo "no"
@@ -125,7 +127,7 @@ ssh_decrypt_file() {
 
 ssh_encrypt_file() {
   printf "File exists ... "
-  if [ -f $1 ]; then
+  if [ -f "$1" ]; then
     echo "yes"
     printf "Encrypting File $1 ... "
     cat $1 | openssl rsautl -encrypt -pubin -inkey ~/.ssh/id_rsa.pub.pem > $1.enc
@@ -140,73 +142,30 @@ ssh_encrypt_file() {
   fi
 }
 
-if [ $# -gt 3 ]; then
+ssh_encrypt_text() {
+  set_output_filename $output_filename
+  echo "Enter your message. (^d to stop typing)"
+  cat | openssl rsautl -encrypt -pubin -inkey $PEM_FILE > $output_filename
+    if [ $? -eq 0 ]; then
+      echo " - OK"
+      echo "Saved file to : $output_filename"
+  else
+      echo " - FAIL"
+  fi
+}
+
+if [ $# -gt 2 ]; then
   display_help "Invalid syntax -- too many arguments specified."
-elif [ $# -eq 3 ]; then
-  case $1 in
-    decrypt|d)
-      case $2 in
-        file|f)
-          ssh_decrypt_file $3
-        ;;
-        text|t)
-          display_help "'text' does not take a filename"
-        ;;
-        *)
-          display_help "Unknown sub-command, use 'file' or 'text'"
-        ;;
-      esac
-    ;;
-    encrypt|e)
-      case $2 in
-        file|f)
-          ssh_encrypt_file $3
-        ;;
-        text|t)
-          display_help "'text' does not take a filename"
-        ;;
-        *)
-          display_help "Unknown sub-command, use 'file' or 'text'"
-        ;;
-      esac
-    ;;
-    setup|s)
-      display_help "'setup' does not take an argument"
-    ;;
-    *)
-      display_help "Unknown command"
-    ;;
-  esac
 elif [ $# -eq 2 ]; then
   case $1 in
     decrypt|d)
-      case $2 in
-        file|f)
-          display_help "'file' requires a filename"
-        ;;
-        text|t)
-          ssh_decrypt_text
-        ;;
-        *)
-          display_help "Unknown sub-command, use 'file' or 'text'"
-        ;;
-      esac
+      ssh_decrypt_file $2
     ;;
     encrypt|e)
-      case $2 in
-        file|f)
-          display_help "'file' requires a filename"
-        ;;
-        text|t)
-          ssh_encrypt_text
-        ;;
-        *)
-          display_help "Unknown sub-command, use 'file' or 'text'"
-        ;;
-      esac
+      ssh_encrypt_file $2
     ;;
     setup|s)
-      display_help "'setup' does not take an argument"
+      display_help "setup does not take an argument"
     ;;
     *)
       display_help "Unknown command"
@@ -215,10 +174,10 @@ elif [ $# -eq 2 ]; then
 elif [ $# -eq 1 ]; then
   case $1 in
     decrypt|d)
-      display_help "'decrypt' requires a sub-command"
+      display_help "decrypt requires a file name"
     ;;
     encrypt|e)
-      display_help "'encrypt' requires a sub-command"
+      ssh_encrypt_text
     ;;
     setup|s)
       setup_sshcrypt
@@ -228,5 +187,5 @@ elif [ $# -eq 1 ]; then
     ;;
   esac
 else
-  display_help "Invalid syntax"
+  display_help "No command specified"
 fi
