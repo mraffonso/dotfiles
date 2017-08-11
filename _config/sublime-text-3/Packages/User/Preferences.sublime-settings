@@ -36,6 +36,7 @@
 	"caret_style": "blink",
 	"color_scheme": "Packages/User/SublimeLinter/1337 (SL).tmTheme",
 	"copy_with_empty_selection": false,
+	"disable_tab_abbreviations_for_scopes": "text.haml",
 	"ensure_newline_at_eof_on_save": true,
 	"folder_exclude_patterns":
 	[
@@ -44,8 +45,10 @@
 		".hg",
 		"CVS",
 		"tmp",
+		"doc",
 		"log",
-		"node_modules"
+		"node_modules",
+		"build"
 	],
 	"font_size": 10,
 	"highlight_line": true,
