@@ -15,7 +15,7 @@ show_help() {
   echo
   echo "Packages:"
   echo "all          -- Meta: Install all Linux packages"
-  echo "osx          -- Meta: Install all OS X packages"
+  echo "macos          -- Meta: Install all OS X packages"
   echo "win          -- Meta: Install all Windows packages"
   echo
   echo "git          -- Pkg:  Symlink Git configs"
@@ -30,7 +30,7 @@ show_help() {
   echo "win-bin      -- Pkg:  Install custom Windows scripts"
   echo "win-git-bash -- Pkg:  Install Git Bash config for Windows"
   echo "win-subl     -- Pkg:  Install Sublime Text 3 config"
-  echo "osx-bin      -- Pkg:  Symlink bin directory"
+  echo "macos-bin      -- Pkg:  Symlink bin directory"
 }
 
 ask_yes_no() {
@@ -222,14 +222,14 @@ all() {
   vim
 }
 
-osx_bin() {
+macos_bin() {
   echo "-- win bin --"
-  create_symlink "osx_bin" "bin"
+  create_symlink "macos/bin" "bin"
   echo
 }
 
-osx () {
-  osx_bin
+macos () {
+  macos_bin
 }
 
 win() {
@@ -247,8 +247,8 @@ elif [ $# -eq 1 ]; then
       all
       exit 0
     ;;
-    "osx")
-      osx
+    "macos")
+      macos
       exit 0
     ;;
     "win")
@@ -295,8 +295,8 @@ elif [ $# -eq 1 ]; then
       vim
       exit 0
     ;;
-    "osx-bin")
-      osx_bin
+    "macos-bin")
+      macos_bin
       exit 0
     ;;
     "win-bin")
