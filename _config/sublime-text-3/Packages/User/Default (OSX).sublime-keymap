@@ -1,0 +1,5 @@
+[
+  { "keys": ["super+h"], "command": "dash_doc" },
+  { "keys": ["super+alt+n"], "command": "side_bar_new_file2" },
+  { "keys": ["super+alt+r"], "command": "side_bar_rename" }
+]

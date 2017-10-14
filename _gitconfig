@@ -10,7 +10,7 @@
   ui = true
 
 [core]
-	excludesfile = ~/.gitignore_global
+  excludesfile = ~/.gitignore_global
 
 [user]
   name = Mario Affonso
