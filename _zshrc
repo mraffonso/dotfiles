@@ -87,10 +87,6 @@ alias mux="tmuxinator"
 alias igrep="grep -i"
 alias lockscreen="pmset displaysleepnow"
 
-# RVM
-export PATH="$PATH:$HOME/bin" # Add personal bin folder to PATH
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
 # Online Help
 unalias run-help
 autoload run-help
@@ -108,5 +104,11 @@ HELPDIR=/usr/local/share/zsh/help
 
 fpath=(/usr/local/share/zsh-completions $fpath)
 
+# Brew sbin
+export PATH="/usr/local/sbin:$PATH"
+
 # Load profile
 source $HOME/.profile
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
