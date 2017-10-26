@@ -8,3 +8,8 @@ _vim/bundle/*
 _vim/viminfo
 
 .DS_Store
+
+sublime-text-3/Packages/User/Package Control.*
+sublime-text-3/Packages/User/SublimeLinter/**
+sublime-text-3/Packages/User/*.crt
+
