@@ -1,0 +1,85 @@
+env :linux do
+  symlink :bin
+end
+
+env :macos do
+  run :bootstrap do
+    desc "Setup RVM"
+    %x( gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB )
+    %x( \\curl -sSL https://get.rvm.io | bash -s stable --ruby )
+
+    desc "Setup RVM"
+    %x( rvm install mri )
+  end
+
+  group :brew do
+    run :brew do
+      desc "Setup Brew"
+      %x( /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" )
+    end
+
+    symlink "macos/Brewfile", "Brewfile"
+  end
+
+  symlink :bin
+
+  group :bundler do
+    symlink "_bundle", ".bundle"
+  end
+
+  group :git do
+    symlink "_gitconfig", ".gitconfig"
+    symlink "_gitignore_global", ".gitignore_global"
+  end
+
+  group :hg do
+    symlink "_hgrc", ".hgrc"
+  end
+
+  group :nvim do
+    run :nvim do
+      %x( mkdir -p $HOME/.config/nvim )
+    end
+
+    symlink "_vimrc", ".config/nvim/init.vim"
+  end
+
+  group :oh_my_zsh do
+    symlink "_oh-my-zsh/custom/plugins/mario", ".oh-my-zsh/custom/plugins/mario"
+  end
+
+
+  group :rails do
+    symlink "_railsrc", ".railsrc"
+  end
+
+  group :ruby_gems do
+    symlink "_gemrc", ".gemrc"
+  end
+
+  group :subl do
+    symlink "sublime-text-3/Packages/User", "Library/Application Support/Sublime Text 3/Packages/User"
+  end
+
+  group :tmux do
+    symlink "_tmux/tmux.conf", ".tmux.conf"
+  end
+
+  group :zsh do
+    symlink "_zshrc", ".zshrc"
+  end
+end
+
+env :windows do
+  group :bin do
+    symlink "win_bin" "bin"
+  end
+
+  group :git_bash do
+    symlink "win_bashrc" ".bashrc"
+  end
+
+  group :win_subl do
+    symlink "_config/sublime-text-3" "AppData/Roaming/Sublime Text 3"
+  end
+end
