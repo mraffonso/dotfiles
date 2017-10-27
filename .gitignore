@@ -1,15 +1,22 @@
+# Vim
 *.swp
 *.swo
 *~
 .netrwhist
-
-_vim/backups/*
-_vim/bundle/*
+_vim/backups/**
+_vim/bundle/**
 _vim/viminfo
 
-.DS_Store
-
+# Sublime Text 3
 sublime-text-3/Packages/User/Package Control.*
 sublime-text-3/Packages/User/SublimeLinter/**
 sublime-text-3/Packages/User/*.crt
 
+
+# Macos #
+#########
+
+.DS_Store
+
+# Bundler
+_bundle/cache/**
