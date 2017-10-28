@@ -3,12 +3,24 @@ env :linux do
 end
 
 env :macos do
-  group :rvm do
+  group :system_bootstrap do
+    run :brew do
+      %x( /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" )
+      %x( brew analytics off )
+      %x( brew install gpg )
+    end
+
     run :install_rvm_and_ruby do
       %x( gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB )
-      %x( \\curl -sSL https://get.rvm.io | bash -s stable --ruby )
-
+      %x( \\curl -sSL https://get.rvm.io | bash -s stable )
       %x( rvm install ruby ) # Install latest stable ruby
+    end
+  end
+
+  group :brew do
+    symlink "macos/Brewfile", "Brewfile"
+    run :install_brew_packages do
+      %x( brew bundle )
     end
   end
 
@@ -16,20 +28,12 @@ env :macos do
     symlink "_gemrc", ".gemrc"
   end
 
-  group :brew do
-    run :brew do
-      %x( /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" )
-    end
-
-    symlink "macos/Brewfile", "Brewfile"
-  end
-
   group :bin do
     symlink "macos/bin", "bin"
   end
 
   group :bundler do
-    symlink "_bundle", ".bundle"
+    symlink "macos/_bundle", ".bundle"
   end
 
   group :git do
