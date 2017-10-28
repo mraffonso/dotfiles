@@ -3,25 +3,30 @@ env :linux do
 end
 
 env :macos do
-  run :bootstrap do
-    desc "Setup RVM"
-    %x( gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB )
-    %x( \\curl -sSL https://get.rvm.io | bash -s stable --ruby )
+  group :rvm do
+    run :install_rvm_and_ruby do
+      %x( gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB )
+      %x( \\curl -sSL https://get.rvm.io | bash -s stable --ruby )
 
-    desc "Setup RVM"
-    %x( rvm install mri )
+      %x( rvm install ruby ) # Install latest stable ruby
+    end
+  end
+
+  group :ruby_gems do
+    symlink "_gemrc", ".gemrc"
   end
 
   group :brew do
     run :brew do
-      desc "Setup Brew"
       %x( /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" )
     end
 
     symlink "macos/Brewfile", "Brewfile"
   end
 
-  symlink :bin
+  group :bin do
+    symlink "macos/bin", "bin"
+  end
 
   group :bundler do
     symlink "_bundle", ".bundle"
@@ -51,10 +56,6 @@ env :macos do
 
   group :rails do
     symlink "_railsrc", ".railsrc"
-  end
-
-  group :ruby_gems do
-    symlink "_gemrc", ".gemrc"
   end
 
   group :subl do
