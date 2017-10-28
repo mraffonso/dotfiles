@@ -24,6 +24,8 @@ brew "youtube-dl"
 brew "zsh"
 brew "zsh-completions"
 
+cask "bartender"
+cask "caffeine"
 cask "dropbox"
 cask "firefox"
 cask "google-chrome"
