@@ -53,11 +53,6 @@ env :macos do
     symlink "_vimrc", ".config/nvim/init.vim"
   end
 
-  group :oh_my_zsh do
-    symlink "_oh-my-zsh/custom/plugins/mario", ".oh-my-zsh/custom/plugins/mario"
-  end
-
-
   group :rails do
     symlink "_railsrc", ".railsrc"
   end
@@ -72,6 +67,14 @@ env :macos do
 
   group :zsh do
     symlink "_zshrc", ".zshrc"
+  end
+
+  group :oh_my_zsh do
+    run :install do
+      %x( sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" )
+    end
+
+    symlink "_oh-my-zsh/custom/plugins/mario", ".oh-my-zsh/custom/plugins/mario"
   end
 end
 
