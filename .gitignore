@@ -9,7 +9,6 @@ _vim/viminfo
 
 # Sublime Text 3
 sublime-text-3/Packages/User/Package Control.*
-sublime-text-3/Packages/User/SublimeLinter/**
 sublime-text-3/Packages/User/*.crt
 
 
