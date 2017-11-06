@@ -45,12 +45,10 @@ env :macos do
     symlink "_hgrc", ".hgrc"
   end
 
-  group :nvim do
-    run :nvim do
-      %x( mkdir -p $HOME/.config/nvim )
+  group :puma_dev do
+    run do
+      %x( sudo puma-dev -setup )
     end
-
-    symlink "_vimrc", ".config/nvim/init.vim"
   end
 
   group :rails do
@@ -63,6 +61,29 @@ env :macos do
 
   group :tmux do
     symlink "_tmux/tmux.conf", ".tmux.conf"
+  end
+
+  group :vagrant do
+    run :bootstrap_vagrant do
+      %x( vagrant plugin install vagrant-vbguest )
+    end
+  end
+
+  group :vim do
+    symlink "_vim", ".vim"
+    symlink "_vimrc", ".vimrc"
+    symlink "_vimrc", ".config/nvim/init.vim" # For NVIM Compat
+
+    run :boostrap_nvim do
+      puts "... Clone Vundle"
+      %x( git clone https://github.com/gmarik/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim )
+
+      puts "... Install Plugins"
+      %x( vim +PluginInstall +qall )
+
+      puts "... Setup helptags for ctrlp"
+      %x( vim -c "helptags $HOME/.vim/bundle/ctrlp.vim/doc" -qall )
+    end
   end
 
   group :zsh do
