@@ -1,0 +1,66 @@
+#!/bin/sh
+
+# mkv-audio-to-aac -- Convert the audio in a Matroska video container to aac
+
+file_exists()
+{
+  if [ -f "$1" ]; then
+    return
+  fi
+  false
+}
+
+new_name()
+{
+  fullfilename="$1"
+  filename=$(basename "$fullfilename")
+  fname="${filename%.*}"
+  ext="${filename##*.}"
+
+  echo "${fname}-FIXED.${ext}"
+}
+
+remux_command()
+{
+  # COMMAND="ffmpeg -i "$1" -map 0:v -c:v copy -c:a aac -shortest "$(new_name "$1")""
+  # ffmpeg -i input.mkv -map 0 -c copy -c:v mpeg2video output.mkv
+
+  # -ac 2 -ab 224k -ar 44100 -af "pan=stereo|FL=FC+0.30*FL+0.30*BL|FR=FC+0.30*FR+0.30*BR"
+
+  AUDIO_FMT="pan=stereo|FL=FC+0.30*FL+0.30*BL|FR=FC+0.30*FR+0.30*BR"
+  # AUDIO_ARG="-c:a aac -ac 2 -ab 224k -ar 44100 -af "$AUDIO_FMT""
+  AUDIO_ARG="-acodec aac -ac 2 -ab 224k -ar 44100 -af "$AUDIO_FMT""
+  # VIDEO_ARG="-map_chapters -c:v copy"
+  VIDEO_ARG="-vcodec copy"
+  SUBTITLE_ARG="-scodec copy"
+  COMMAND="ffmpeg -i $1 $VIDEO_ARG $AUDIO_ARG $SUBTITLE_ARG -shortest "$(new_name "$1")""
+  echo "$COMMAND"
+}
+
+if [ $# -eq 0 ]; then
+  echo "Error: Only one argument is required, a file name."
+elif [ $# -eq 1 ]; then
+  if file_exists "$1"; then
+    COMMAND=$(remux_command $1)
+    echo $COMMAND
+    if [ $? -eq 0 ]; then
+      echo
+      echo "Completed.... it *should* be working."
+      echo
+      echo "Go test it out!"
+      echo
+    else
+      echo
+      echo "Oops, something went wrong. The command specified was:"
+      echo
+      echo "$COMMAND"
+      echo
+    fi
+  else
+    echo "Error: The specified file does not exist."
+    echo
+  fi
+else
+  echo "Error: Only one argument is required, a file name."
+  echo
+fi
