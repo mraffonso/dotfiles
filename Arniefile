@@ -55,6 +55,10 @@ env :macos do
     symlink "_railsrc", ".railsrc"
   end
 
+  group :shell do
+    symlink "macos/_profile", ".profile"
+  end
+
   group :subl do
     symlink "sublime-text-3/Packages/User", "Library/Application Support/Sublime Text 3/Packages/User"
   end
