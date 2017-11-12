@@ -2,9 +2,10 @@
   alias = config --get-regexp alias
   b = branch
   co = checkout
-  hard-reset = ! git reset --hard && git clean -f -d
+  hard-reset = "!f() { git reset --hard && git clean -f -d; }; f"
   lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
   recommit = commit --amend
+  unstage = "!f() { git reset HEAD -- \"$1\"; }; f"
 
 [color]
   ui = true
