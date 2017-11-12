@@ -1,5 +1,5 @@
 [alias]
-  alias = config --get-regexp alias
+  alias      = config --get-regexp alias
   b          = branch
   co         = checkout
   hard-reset = "! f() { git reset --hard && git clean -f -d; }; f"
