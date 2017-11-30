@@ -1,0 +1,64 @@
+#!/bin/sh
+
+# systeusage -- shell scripting wizardry to output system usage
+
+display_error() {
+  echo "Error: $1."
+}
+
+display_help() {
+  if [ $# -eq 1 ]; then
+    display_error "$1"
+  fi
+  echo
+  echo "Syntax: sysusage [command]"
+  echo
+  echo "Commands:"
+  echo "  all  -- Pretty output for both cpu and ram"
+  echo "  cpu  -- Show only cpu usage value"
+  echo "  ram  -- Show only ram usage value"
+  echo "  help -- Show this help screen"
+  echo
+}
+
+cpu_usage()
+{
+  ps -A -o %cpu | awk '{s+=$1} END {print s "%"}'
+}
+
+ram_usage()
+{
+  ps -caxm -orss= | awk '{ sum += $1 } END { printf "%0.1f GiB", sum/1048576 }'
+}
+
+all_usage()
+{
+  echo "CPU: $( cpu_usage )"
+  echo "RAM: $( ram_usage )"
+  echo
+}
+
+if [ "$#" -eq 0 ]; then
+  all_usage
+fi
+
+if [ "$#" -eq 1 ]; then
+  case $1 in
+    cpu|c)
+      cpu_usage
+    ;;
+    ram|r)
+      ram_usage
+    ;;
+    help|h)
+      display_help
+    ;;
+    *)
+      display_help "Unknown command"
+    ;;
+  esac
+fi
+
+if [ "$#" -gt 2 ]; then
+  display_help
+fi
