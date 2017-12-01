@@ -36,6 +36,11 @@ ram_total()
   sysctl hw.memsize | awk -F ": " '{ printf "%4.1f", $2 / 1073741824 }'
 }
 
+ram_total_i()
+{
+  sysctl hw.memsize | awk -F ": " '{ printf "%2.0f", $2 / 1073741824 }'
+}
+
 all_usage()
 {
   echo "CPU: $( cpu_usage )"
@@ -57,6 +62,9 @@ if [ "$#" -eq 1 ]; then
     ;;
     ram_total|rt)
       ram_total
+    ;;
+    ram_total_i|rti)
+      ram_total_i
     ;;
     help|h)
       display_help
