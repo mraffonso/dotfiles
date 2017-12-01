@@ -45,6 +45,13 @@ env :macos do
     symlink "_hgrc", ".hgrc"
   end
 
+  group :nvm do
+    run :nvm_setup
+      # Create NVM's working directory if it doesn't exist
+      %x( mkdir -p ~/.nvm)
+    end
+  end
+
   group :puma_dev do
     run do
       %x( sudo puma-dev -setup )
@@ -92,6 +99,13 @@ env :macos do
 
   group :zsh do
     symlink "_zshrc", ".zshrc"
+
+    run :setup_zsh do
+      # Add to /etc/shells
+      %x( echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells )
+      # Set my default shell
+      %x( chsh -s /usr/local/bin/zsh )
+    end
   end
 
   group :oh_my_zsh do
