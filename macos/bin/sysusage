@@ -23,12 +23,17 @@ display_help() {
 
 cpu_usage()
 {
-  ps -A -o %cpu | awk '{s+=$1} END {print s "%"}'
+  ps -A -o %cpu | awk '{ sum += $1 } END { printf "%04.1f", sum }'
 }
 
 ram_usage()
 {
-  ps -caxm -orss= | awk '{ sum += $1 } END { printf "%0.1f GiB", sum/1048576 }'
+  ps -caxm -orss= | awk '{ sum += $1 } END { printf "%1.1f", sum/1048576 }'
+}
+
+ram_total()
+{
+  sysctl hw.memsize | awk -F ": " '{ printf "%4.1f", $2 / 1073741824 }'
 }
 
 all_usage()
@@ -49,6 +54,9 @@ if [ "$#" -eq 1 ]; then
     ;;
     ram|r)
       ram_usage
+    ;;
+    ram_total|rt)
+      ram_total
     ;;
     help|h)
       display_help
