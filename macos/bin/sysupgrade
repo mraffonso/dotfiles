@@ -1,0 +1,389 @@
+#!/usr/local/bin/zsh
+
+# sysupgrade -- easily upgrade all the things
+
+COLOR_GREEN="\033[0;32m"
+COLOR_RED="\033[0;31m"
+COLOR_YELLOW="\033[0;33m"
+COLOR_OFF="\033[0m"
+
+MACOS_AVAILABLE=false
+MACOS_UPGRADE=true
+BREW_AVAILABLE=false
+BREW_UPGRADE=true
+NPM_AVAILABLE=false
+NPM_UPGRADE=true
+RVM_AVAILABLE=false
+RVM_UPGRADE=true
+GEMS_AVAILABLE=false
+GEMS_UPGRADE=true
+OMZ_AVAILABLE=false
+OMZ_UPGRADE=true
+
+bootstrap()
+{
+  # Go to $HOME before doing anything
+  cd $HOME
+
+  if type softwareupdate &> /dev/null; then
+    MACOS_AVAILABLE=true
+    MACOS_UPGRADE=true
+  fi
+
+  if type brew &> /dev/null; then
+    BREW_AVAILABLE=true
+    BREW_UPGRADE=true
+  fi
+
+  if type npm &> /dev/null; then
+    NPM_AVAILABLE=true
+    NPM_UPGRADE=true
+  fi
+
+  if type rvm &> /dev/null; then
+    RVM_AVAILABLE=true
+    RVM_UPGRADE=true
+  fi
+
+  if type gem &> /dev/null; then
+    GEMS_AVAILABLE=true
+    GEMS_UPGRADE=true
+  fi
+
+  if [ -f "$ZSH/oh-my-zsh.sh" ]; then # If OMZ exists, source it for max compat
+    source "$ZSH/oh-my-zsh.sh"
+  fi
+
+  if type upgrade_oh_my_zsh &> /dev/null; then
+    OMZ_AVAILABLE=true
+    OMZ_UPGRADE=true
+  fi
+
+}
+
+get_option()
+{
+  if [ $1 = true ] && [ $2 = true ]; then
+    echo "[${COLOR_GREEN}✓${COLOR_OFF}]"
+  elif [ $1 = true ] && [ $2 = false ]; then
+    echo "[${COLOR_YELLOW}x${COLOR_OFF}]"
+  else
+    echo "[${COLOR_RED}x${COLOR_OFF}]"
+  fi
+}
+
+set_all_options()
+{
+  if [ $MACOS_AVAILABLE = true ]; then
+    if [ $1 = "on" ]; then
+      MACOS_UPGRADE=true
+    else
+      MACOS_UPGRADE=false
+    fi
+  fi
+
+  if [ $BREW_AVAILABLE = true ]; then
+    if [ $1 = "on" ]; then
+      BREW_UPGRADE=true
+    else
+      BREW_UPGRADE=false
+    fi
+  fi
+
+  if [ $NPM_AVAILABLE = true ]; then
+    if [ $1 = "on" ]; then
+      NPM_UPGRADE=true
+    else
+      NPM_UPGRADE=false
+    fi
+  fi
+
+  if [ $RVM_AVAILABLE = true ]; then
+    if [ $1 = "on" ]; then
+      RVM_UPGRADE=true
+    else
+      RVM_UPGRADE=false
+    fi
+  fi
+
+  if [ $GEMS_AVAILABLE = true ]; then
+    if [ $1 = "on" ]; then
+      GEMS_UPGRADE=true
+    else
+      GEMS_UPGRADE=false
+    fi
+  fi
+
+  if [ $OMZ_AVAILABLE = true ]; then
+    if [ $1 = "on" ]; then
+      OMZ_UPGRADE=true
+    else
+      OMZ_UPGRADE=false
+    fi
+  fi
+}
+
+toggle_option()
+{
+  case $1 in
+    macos)
+      if [ $MACOS_AVAILABLE = true ]; then
+        if [ $MACOS_UPGRADE = true ]; then
+          MACOS_UPGRADE=false
+        else
+          MACOS_UPGRADE=true
+        fi
+      fi
+      ;;
+    brew)
+      if [ $BREW_AVAILABLE = true ]; then
+        if [ $BREW_UPGRADE = true ]; then
+          BREW_UPGRADE=false
+        else
+          BREW_UPGRADE=true
+        fi
+      fi
+      ;;
+    npm)
+      if [ $NPM_AVAILABLE = true ]; then
+        if [ $NPM_UPGRADE = true ]; then
+          NPM_UPGRADE=false
+        else
+          NPM_UPGRADE=true
+        fi
+      fi
+      ;;
+    rvm)
+      if [ $RVM_AVAILABLE = true ]; then
+        if [ $RVM_UPGRADE = true ]; then
+          RVM_UPGRADE=false
+        else
+          RVM_UPGRADE=true
+        fi
+      fi
+      ;;
+    gems)
+      if [ $GEMS_AVAILABLE = true ]; then
+        if [ $GEMS_UPGRADE = true ]; then
+          GEMS_UPGRADE=false
+        else
+          GEMS_UPGRADE=true
+        fi
+      fi
+      ;;
+    omz)
+      if [ $OMZ_AVAILABLE = true ]; then
+        if [ $OMZ_UPGRADE = true ]; then
+          OMZ_UPGRADE=false
+        else
+          OMZ_UPGRADE=true
+        fi
+      fi
+      ;;
+  esac
+}
+
+display_help()
+{
+  echo "########"
+  echo "# HELP #"
+  echo "########"
+  echo
+  echo "This is an interactive application, currently there are no available"
+  echo "command line arguments."
+  echo
+  echo "Usge:"
+  echo
+  echo "1. Run the script"
+  echo "2. Toggle which upgrades will run, by using the numbers specififed"
+  echo "3. Press 0 to perform the upgrades"
+  echo
+  echo "NOTE: You can quit without performing upgrades by specifyign \"q\""
+}
+
+display_menu()
+{
+  echo "1. $(get_option $MACOS_AVAILABLE $MACOS_UPGRADE) Upgrade macOS"
+  echo "2. $(get_option $BREW_AVAILABLE $BREW_UPGRADE) Upgrade Homebrew"
+  echo "3. $(get_option $NPM_AVAILABLE $NPM_UPGRADE) Upgrade NPM"
+  echo "4. $(get_option $RVM_AVAILABLE $RVM_UPGRADE) Upgrade RVM"
+  echo "5. $(get_option $GEMS_AVAILABLE $GEMS_UPGRADE) Upgrade Ruby Gems"
+  echo "6. $(get_option $OMZ_AVAILABLE $OMZ_UPGRADE) Upgrade Oh My Zsh"
+  echo "+.     Turn on all available upgrades"
+  echo "-.     Turn off all available upgrades"
+  echo "0.     Upgrade all the things"
+  echo "q.     Quit without doing anything"
+  echo
+  echo -n "Choice: "
+}
+
+display_title()
+{
+  echo
+  echo "  ___  __   __  ___   _   _   ___    ___   ___     _     ___    ___ "
+  echo " / __| \ \ / / / __| | | | | | _ \  / __| | _ \   /_\   |   \  | __|"
+  echo " \__ \  \ V /  \__ \ | |_| | |  _/ | (_ | |   /  / _ \  | |) | | _| "
+  echo " |___/   |_|   |___/  \___/  |_|    \___| |_|_\ /_/ \_\ |___/  |___|"
+  echo
+  echo "                                            Upgrading all the things"
+  echo
+}
+
+upgrade_macos()
+{
+  echo "${COLOR_GREEN}➜${COLOR_OFF} Apple Software Update"
+  echo
+  sudo softwareupdate -i -a
+  echo
+}
+
+upgrade_brew()
+{
+  echo "${COLOR_GREEN}➜${COLOR_OFF} Homebrew\n"
+  echo
+  brew update
+  brew upgrade
+  brew cleanup
+  echo
+}
+
+upgrade_npm()
+{
+  echo "${COLOR_GREEN}➜${COLOR_OFF} Npm\n"
+  echo
+  npm install npm -g
+  npm update -g
+  echo
+}
+
+upgrade_rvm()
+{
+  echo "${COLOR_GREEN}➜${COLOR_OFF} RVM\n"
+  echo
+  rvm get stable
+  echo
+}
+
+upgrade_gems()
+{
+  echo "${COLOR_GREEN}➜${COLOR_OFF} Ruby Gems\n"
+  echo
+  gem update
+  echo
+}
+
+upgrade_omz()
+{
+  echo "${COLOR_GREEN}➜${COLOR_OFF} Oh My Zsh\n"
+  echo
+  upgrade_oh_my_zsh
+  echo
+}
+
+perform_upgrade()
+{
+  echo "Hey, stick around for a moment to enter your password before leaving."
+  echo
+  echo "... Then go grab a 🍺 -- this could take a while.\n"
+  echo
+
+  if [ $MACOS_UPGRADE = true ]; then
+    upgrade_macos
+  fi
+
+  if [ $BREW_UPGRADE = true ]; then
+    upgrade_brew
+  fi
+
+  if [ $NPM_UPGRADE = true ]; then
+    upgrade_npm
+  fi
+
+  if [ $RVM_UPGRADE = true ]; then
+    upgrade_rvm
+  fi
+
+  if [ $GEMS_UPGRADE = true ]; then
+    upgrade_gems
+  fi
+
+  if [ $OMZ_UPGRADE = true ]; then
+    upgrade_omz
+  fi
+
+  echo
+  echo "Sucessfully updated all the things. 👍👍\n"
+  echo
+}
+
+main()
+{
+  bootstrap
+
+  IN_MENU=true
+
+  while [ ${IN_MENU} = true ]; do
+
+    clear
+    display_title
+    display_menu
+
+    read INPUT_STRING
+    echo
+
+    case $INPUT_STRING in
+      1)
+        toggle_option "macos"
+        ;;
+      2)
+        toggle_option "brew"
+        ;;
+      3)
+        toggle_option "npm"
+        ;;
+      4)
+        toggle_option "rvm"
+        ;;
+      5)
+        toggle_option "gems"
+        ;;
+      6)
+        toggle_option "omz"
+        ;;
+      0)
+        echo "Yay, upgrading all the things... 😀"
+        echo
+        perform_upgrade
+        IN_MENU=false
+        ;;
+      +)
+        set_all_options "on"
+        ;;
+      -)
+        set_all_options "off"
+        ;;
+      h|help)
+        clear
+        display_help
+        echo
+        echo "Press any key to close help"
+        echo
+        read
+        ;;
+      q|quit)
+        echo "Boooo, not upgrading all the things... 😞"
+        echo
+        IN_MENU=false
+        ;;
+      *)
+        echo "Sorry, I don't understand"
+        ;;
+    esac
+    in_menu=false
+  done
+
+  echo "Bye bye!"
+  echo
+}
+
+main
