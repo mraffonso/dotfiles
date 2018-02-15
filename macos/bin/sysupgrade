@@ -260,7 +260,7 @@ upgrade_rvm()
 {
   echo "${COLOR_GREEN}➜${COLOR_OFF} RVM\n"
   echo
-  rvm get stable
+  rvm get head
   echo
 }
 
