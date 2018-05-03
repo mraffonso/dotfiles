@@ -87,6 +87,7 @@ alias mux="tmuxinator"
 alias igrep="grep -i"
 alias lockscreen="pmset displaysleepnow"
 alias vag="vagrant"
+alias git-sh="gitsh"
 
 # Online Help
 unalias run-help
