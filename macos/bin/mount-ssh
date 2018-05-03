@@ -1,0 +1,15 @@
+#!/bin/sh
+# mount-ssh -- simple sshfs wrapper, since I won't remember the arguments
+
+MOUNTSSH_PORT=22
+
+usage() {
+  echo "Usage: mount-ssh user@server:/target/path ~/mountpoint VolumeName"
+  echo
+}
+
+if [ $# -eq 3 ]; then
+  echo sshfs -p $MOUNTSSH_PORT $1 $2 -oauto_cache,reconnect,defer_permissions,noappledouble,negative_vncache,volname=$3
+else
+  usage
+fi
