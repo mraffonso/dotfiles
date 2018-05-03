@@ -18,6 +18,5 @@
     "debug": true,
 
     // Put your custom syntax rules here:
-    "syntaxes": [
-    ]
+    "syntaxes": []
 }
