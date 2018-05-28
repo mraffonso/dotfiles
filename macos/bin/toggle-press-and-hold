@@ -1,0 +1,26 @@
+#!/bin/sh
+
+COLOR_GREEN="\033[0;32m"
+COLOR_RED="\033[0;31m"
+COLOR_OFF="\033[0m"
+
+CURRENT_PAH=$(defaults read -g ApplePressAndHoldEnabled)
+
+echo "Toggling press and hold ..."
+
+if [ $CURRENT_PAH -eq 0 ]; then # Not enabled
+  NEW_BVAL="true"
+else # Is enabled
+  NEW_BVAL="false"
+fi
+
+# Set new boolean value
+defaults write -g ApplePressAndHoldEnabled -bool $NEW_BVAL
+
+CURRENT_PAH=$(defaults read -g ApplePressAndHoldEnabled)
+
+if [ $CURRENT_PAH -eq 0 ]; then # Not enabled
+  echo "${COLOR_GREEN}✓ Press And Hold Enabled${COLOR_OFF}"
+else # Is enabled
+  echo "${COLOR_RED}x Press And Hold disabled ${COLOR_OFF}"
+fi
