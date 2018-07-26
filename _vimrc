@@ -7,6 +7,7 @@
 "
 
 " Use Vim settings instead of strict Vi compatible settings
+
 " This must be set first, since it changes other options.
 set nocompatible
 
@@ -30,6 +31,9 @@ syntax on
 " Change leader to a comma because the backslash is too far away.
 " This has to be set before vundle
 let mapleader=","
+
+" Crontab fix, don't use writebackup when editing crontab files.
+autocmd filetype crontab setlocal nobackup nowritebackup
 
 " ================= Vundle Initialization =================
 
