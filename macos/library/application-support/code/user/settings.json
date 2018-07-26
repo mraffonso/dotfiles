@@ -1,0 +1,9 @@
+{
+    "telemetry.enableTelemetry": false,
+    "workbench.startupEditor": "none",
+    "workbench.activityBar.visible": false,
+    "workbench.statusBar.visible": false,
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.colorTheme": "Seti (Improved)",
+    "vsicons.projectDetection.autoReload": true
+}

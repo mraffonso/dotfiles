@@ -46,7 +46,7 @@ env :macos do
   end
 
   group :nvm do
-    run :nvm_setup
+    run :nvm_setup do
       # Create NVM's working directory if it doesn't exist
       %x( mkdir -p ~/.nvm)
     end
@@ -68,6 +68,10 @@ env :macos do
 
   group :subl do
     symlink "sublime-text-3/Packages/User", "Library/Application Support/Sublime Text 3/Packages/User"
+  end
+
+  group :vscode do
+    symlink "macos/library/application-support/code/user/settings.json", "Library/Application Support/Code/User/settings.json"
   end
 
   group :tmux do
