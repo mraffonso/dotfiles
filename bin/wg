@@ -1,35 +1,54 @@
 #!/bin/sh
 
-# wg - Wget stuff
+# wg - wget wrapper, cause I'm lazy
 
-CWD=$(pwd)
+exec_command() {
+  echo
+  echo "wget command:"
+  echo "  $1"
+  echo
+  $1
+}
 
 show_help() {
   if [ $# -eq 1 ]; then
     echo $1
     echo
   fi
-  echo "wg - Wget stuff"
+  echo "wg - wget wrapper, cause I'm lazy"
   echo
   echo "Usage: wg <command> [options]"
   echo
   echo "Commands:"
   echo
-  echo "website"
+  echo "resume  -- resume a download"
+  echo "Usage: wg resume [url]"
+  echo
+  echo "website -- download a website"
   echo "Usage: wg website [url]"
   echo
 }
 
+wget_resume() {
+  url=$1
+  wg_cmd="wget --continue "$url""
+  exec_command "$wg_cmd"
+  unset url
+  unset wg_cmd
+}
+
 wget_website() {
   url=$1
-  echo $url
-  wget \
+  wg_cmd="wget \
     --recursive \
     --page-requisites \
     --html-extension \
     --convert-links \
     --no-parent \
-    "$1"
+    "$url""
+  exec_command "$wg_cmd"
+  unset url
+  unset wg_cmd
 }
 
 if [ $# -lt 1 ]; then
@@ -37,7 +56,7 @@ if [ $# -lt 1 ]; then
   exit 1
 elif [ $# -eq 1 ]; then
   case "$1" in
-    "help")
+    "help"|"h")
       show_help
       exit 0
     ;;
@@ -48,7 +67,11 @@ elif [ $# -eq 1 ]; then
   esac
 elif [ $# -eq 2 ]; then
   case "$1" in
-    "website")
+    "resume"|"r")
+      wget_resume "$2"
+      exit 0
+    ;;
+    "website"|"w")
       wget_website "$2"
       exit 0
     ;;
@@ -61,4 +84,3 @@ elif [ $# -gt 2 ]; then
   show_help "Error: Invalid syntax!"
   exit 1
 fi
-
