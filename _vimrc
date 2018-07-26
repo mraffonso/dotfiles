@@ -14,6 +14,7 @@ set nocompatible
 set encoding=utf-8
 scriptencoding utf-8
 
+
 " ================= General Configuration =================
 
 set number " Line numbers are good
@@ -38,6 +39,7 @@ let mapleader=","
 " Crontab fix, don't use writebackup when editing crontab files.
 autocmd filetype crontab setlocal nobackup nowritebackup
 
+
 " ================= Vundle Initialization =================
 
 " This loads all the plugins specified in ~/.vim/vundle.vim
@@ -46,7 +48,8 @@ if filereadable(expand("~/.vim/vundles.vim"))
   source ~/.vim/vundles.vim
 endif
 
-" ================ Swap, Backps & Viminfo =================
+
+" ================= Swap, Backps & Viminfo ================
 
 " Enable swapfiles and set path
 silent !mkdir -p ~/.vim/tmp > /dev/null 2>&1
@@ -60,6 +63,7 @@ else
   set viminfo+=n~/.vim/viminfo
 endif
 
+
 " ==================== Persistent Undo ====================
 
 " Keep undo history across sessions, by storing in file.
@@ -69,6 +73,7 @@ if has('persistent_undo')
   set undodir=~/.vim/backups
   set undofile
 endif
+
 
 " ====================== Indentation ======================
 
@@ -88,11 +93,13 @@ set list listchars=tab:\ \ ,trail:·
 set nowrap " Don't wrap lines
 set linebreak "Wrap lines at convenient points
 
+
 " ========================= Folds =========================
 
 set foldmethod=indent " Fold based on indent
 set foldnestmax=3 " Deepest fold is 3 levels
 set nofoldenable " Dont fold by default
+
 
 " ======================= Completion ======================
 
@@ -109,11 +116,13 @@ set wildignore+=log/**
 set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
 
+
 " ======================= Scrolling =======================
 
 set scrolloff=8 " Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
+
 
 " ======================= Searching =======================
 
@@ -122,10 +131,46 @@ set smartcase " Unless uppercase is used
 set incsearch " Incremental search
 set hlsearch " Highlight matching text
 
+
 " ======================== Copying ========================
 
 let g:clipbrdDefaultReg = '+' " Since I use linux, I want this
 vmap <C-c> "+y " Copy selected text with CTRL+c
+
+
+"==================== Custom Functions ====================
+
+" Search and count occurences
+function SearchAndCountOccurences(pattern)
+  execute '/' . a:pattern
+  execute ':%s///gn'
+endfunction
+
+" Displays the status of search highlighting
+function HlsearchStatus()
+  if &hlsearch
+    return 'Search highlighting enabled'
+  else
+    return 'Search highlighting disabled'
+  endif
+endfunction
+
+" Toggles search highlighting on and off
+function ToggleHlsearch()
+  if &hlsearch
+    set nohlsearch
+  else
+    set hlsearch
+  endif
+endfunction
+
+
+"==================== Custom Commands =====================
+
+" Count Occurences of previous search
+" command CountOccurences :%s///gn
+" command -nargs=1 CountOccurences /<f-args><bar>:%s///gn
+command -nargs=1 CountOccurences :call SearchAndCountOccurences(<f-args>)
 
 " ======================== Mapping ========================
 
@@ -135,13 +180,18 @@ nnoremap JJJJ <Nop>
 inoremap JJ <ESC>
 nnoremap JJJJ <Nop>
 
+" Setup toggling search highlighting
+nnoremap <silent> <C-l> :call ToggleHlsearch()<CR><C-l>:echo HlsearchStatus()<CR>
+
 " Remap a to A in command mode
 noremap a A
+
 
 " ======================= Statusbar =======================
 
 set laststatus=2
 set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
+
 
 " ================ Post Setup Instructions ================
 
