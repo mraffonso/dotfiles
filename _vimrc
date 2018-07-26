@@ -7,9 +7,12 @@
 "
 
 " Use Vim settings instead of strict Vi compatible settings
-
 " This must be set first, since it changes other options.
 set nocompatible
+
+" Set encoding to utf-8 for use of special characters in this file
+set encoding=utf-8
+scriptencoding utf-8
 
 " ================= General Configuration =================
 
@@ -50,7 +53,12 @@ silent !mkdir -p ~/.vim/tmp > /dev/null 2>&1
 set swapfile
 set backupdir=~/.vim/tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim/tmp,~/tmp,/var/tmp,/tmp
-set viminfo+=n~/.vim/viminfo
+
+if has('nvim')
+  set viminfo+=n~/.vim/nviminfo
+else
+  set viminfo+=n~/.vim/viminfo
+endif
 
 " ==================== Persistent Undo ====================
 
@@ -75,7 +83,7 @@ set expandtab
 filetype indent on
 
 " Display tabs and trailing spaces visually
-set list listchars=tab:\ \ ,trail:·
+set list listchars=tab:\ \ ,trail:Â·
 
 set nowrap " Don't wrap lines
 set linebreak "Wrap lines at convenient points
@@ -157,4 +165,3 @@ set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 " Windows
 " ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ -f "%USERPROFILE%\.vim\tags\cpp" C:\MinGW\lib\gcc\mingw32\4.8.1\include\c++
 " ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ -f "%USERPROFILE%\.vim\tags\sfml" C:\SFML-2.1\include\SFML
-
