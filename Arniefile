@@ -71,6 +71,7 @@ env :macos do
   end
 
   group :vscode do
+    symlink "macos/library/application-support/code/user/keybindings.json", "Library/Application Support/Code/User/keybindings.json"
     symlink "macos/library/application-support/code/user/settings.json", "Library/Application Support/Code/User/settings.json"
   end
 
