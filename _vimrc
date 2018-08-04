@@ -172,6 +172,7 @@ endfunction
 " command -nargs=1 CountOccurences /<f-args><bar>:%s///gn
 command -nargs=1 CountOccurences :call SearchAndCountOccurences(<f-args>)
 
+
 " ======================== Mapping ========================
 
 " Remap jj to escape in insert mode
@@ -185,6 +186,10 @@ nnoremap <silent> <C-l> :call ToggleHlsearch()<CR><C-l>:echo HlsearchStatus()<CR
 
 " Remap a to A in command mode
 noremap a A
+
+" Use Tab and S-Tab to switch between buffers
+nnoremap  <silent>   <Tab>  :bnext<CR>
+nnoremap  <silent> <S-Tab>  :bprevious<CR>
 
 
 " ======================= Statusbar =======================
