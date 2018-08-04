@@ -52,7 +52,6 @@ brew "zsh"
 brew "zsh-completions"
 
 cask "android-file-transfer"
-cask "atom"
 cask "caffeine"
 cask "chrome-remote-desktop-host"
 cask "cyberduck"
