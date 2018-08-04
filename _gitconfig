@@ -8,6 +8,7 @@
   lol        = log --graph --decorate --pretty=oneline --abbrev-commit --all
   ls         = "! f() { ls $1; }; f"
   recommit   = commit --amend
+  uncommit   = reset --hard HEAD^
   unstage    = "! f() { git reset HEAD -- \"$1\"; }; f"
 
 [color]
