@@ -1,4 +1,5 @@
 {
+    "editor.multiCursorModifier": "ctrlCmd",
     "explorer.autoReveal": false,
     "explorer.confirmDelete": false,
     "files.insertFinalNewline": true,
