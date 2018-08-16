@@ -7,3 +7,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " Toggle NERDTree keyboard shortcut
 map <C-n> :NERDTreeToggle<CR>
+
+" Remove press ? for help message
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
