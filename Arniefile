@@ -22,6 +22,8 @@ env :macos do
     run :install_brew_packages do
       %x( brew bundle )
     end
+
+    %x( brew pin qt )
   end
 
   group :ruby_gems do
