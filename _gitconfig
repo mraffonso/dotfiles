@@ -3,9 +3,9 @@
   b           = branch
   changes     = "! f() {\
                   if [ $# == 2 ]; then\
-                    git diff --stat $1 $2;\
+                    git diff --stat \"$1\" \"$2\";\
                   elif [ $# == 1 ]; then\
-                    git diff --stat $1;\
+                    git diff --stat \"$1\";\
                   else\
                     git diff --stat HEAD;\
                   fi\
@@ -13,13 +13,21 @@
                 f"
   clear       = "! f() { clear; }; f"
   co          = checkout
+  count       = "! f() {\
+                  if [ $# == 1 ]; then\
+                    git rev-list --count \"$1\";\
+                  else\
+                    git rev-list --count master;\
+                  fi\
+                };\
+                f"
   files       = "! f() {\
                   if [ $# == 2 ]; then\
                     git diff --name-status \"$1\" \"$2\";\
                   elif [ $# == 1 ]; then\
-                    git diff --name-status \"$1\";\
+                    git diff --name-status \"$1\" \"$2\";\
                   else\
-                    git diff --name-status HEAD;\
+                    git diff --stat HEAD;\
                   fi\
                 };\
                 f"
