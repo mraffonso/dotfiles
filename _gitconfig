@@ -1,15 +1,34 @@
 [alias]
-  alias      = config --get-regexp alias
-  b          = branch
-  clear      = "! f() { clear; }; f"
-  co         = checkout
-  files      = "!git diff --name-status \"$1\"^ \"$1\" #"
-  hard-reset = "! f() { git reset --hard && git clean -f -d; }; f"
-  lol        = log --graph --decorate --pretty=oneline --abbrev-commit --all
-  ls         = "! f() { ls $1; }; f"
-  recommit   = commit --amend
-  uncommit   = reset --hard HEAD^
-  unstage    = "! f() { git reset HEAD -- \"$1\"; }; f"
+  alias       = config --get-regexp alias
+  b           = branch
+  changes     = "! f() {\
+                  if [ $# == 2 ]; then\
+                    git diff --stat $1 $2;\
+                  elif [ $# == 1 ]; then\
+                    git diff --stat $1;\
+                  else\
+                    git diff --stat HEAD;\
+                  fi\
+                };\
+                f"
+  clear       = "! f() { clear; }; f"
+  co          = checkout
+  files       = "! f() {\
+                  if [ $# == 2 ]; then\
+                    git diff --name-status \"$1\" \"$2\";\
+                  elif [ $# == 1 ]; then\
+                    git diff --name-status \"$1\";\
+                  else\
+                    git diff --name-status HEAD;\
+                  fi\
+                };\
+                f"
+  hard-reset  = "! f() { git reset --hard && git clean -f -d; }; f"
+  lol         = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  ls          = "! f() { ls $1; }; f"
+  recommit    = commit --amend
+  uncommit    = reset --hard HEAD^
+  unstage     = "! f() { git reset HEAD -- \"$1\"; }; f"
 
 [color]
   ui = true
