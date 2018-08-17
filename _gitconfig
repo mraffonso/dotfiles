@@ -1,5 +1,6 @@
 [alias]
   alias       = config --get-regexp alias
+  aliases     = "! f() { git config --get-regexp alias | cut -d' ' -f1; }; f"
   b           = branch
   changes     = "! f() {\
                   if [ $# == 2 ]; then\
