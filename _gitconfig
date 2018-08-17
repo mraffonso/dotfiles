@@ -1,7 +1,9 @@
 [alias]
+  ac          = "! f() { git add .; git commit -am \"$1\"; }; f"
   alias       = config --get-regexp alias
   aliases     = "! f() { git config --get-regexp alias | cut -d' ' -f1; }; f"
   b           = branch
+  c           = commit
   changes     = "! f() {\
                   if [ $# == 2 ]; then\
                     git diff --stat \"$1\" \"$2\";\
