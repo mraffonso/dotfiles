@@ -5,7 +5,7 @@
 .netrwhist
 _vim/backups/**
 _vim/bundle/**
-_vim/nviminfo
+_vim/nviminfo*
 _vim/viminfo
 
 # Sublime Text 3
