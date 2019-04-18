@@ -1,0 +1,13 @@
+#!/bin/sh
+# ff-dl-hls -- download HLS stream
+
+fetch_hls() {
+  ffmpeg -user_agent "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/601.7.8 (KHTML, like Gecko) Version/9.1.3 Safari/537.86.7" -i "$1" -c copy "$2"
+}
+
+if [ $# -eq 2 ]; then
+  fetch_hls "$1" "$2"
+else
+  echo "error: supply two arguments; the url and a filename."
+fi
+
