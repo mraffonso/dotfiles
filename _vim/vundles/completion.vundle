@@ -1,7 +1,3 @@
-" ComniCppComplete
+" OmniCppComplete
 " C/C++ omni-completion with ctags database
 Plugin 'vim-scripts/OmniCppComplete'
-
-"AutoComplPop
-"Automatically opens popup menu for completions
-Plugin 'vim-scripts/AutoComplPop'
