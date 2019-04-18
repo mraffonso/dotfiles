@@ -39,6 +39,7 @@
   ls          = "! f() { ls $1; }; f"
   pl          = pull
   pu          = push
+  pullall     = submodule update --recursive --remote
   recommit    = commit --amend
   uncommit    = reset --hard HEAD^
   unstage     = "! f() { git reset HEAD -- \"$1\"; }; f"
