@@ -164,6 +164,31 @@ function ToggleHlsearch()
   endif
 endfunction
 
+" Asks the user yes or no
+function! AskYN(message)
+  echom a:message 
+  while 1
+    let choice = input('y/n? ')
+    if tolower(choice) == 'y'
+      return 1
+    elseif tolower(choice) == 'n'
+      return 0
+    else
+      continue
+    endif
+  endwhile
+endfunction
+
+" Toggles highlighting text exceeding 80
+function! ToggleHlLineLength()
+  "highlight ColorColumn guibg=red
+  if &colorcolumn == 0
+    set colorcolumn=80
+  else
+    set colorcolumn=0
+  endif
+endfunction
+
 
 "==================== Custom Commands =====================
 
@@ -171,6 +196,9 @@ endfunction
 " command CountOccurences :%s///gn
 " command -nargs=1 CountOccurences /<f-args><bar>:%s///gn
 command -nargs=1 CountOccurences :call SearchAndCountOccurences(<f-args>)
+
+" Highlight text exceeding 80 characters
+command -nargs=0 HlLineLength :call ToggleHlLineLength()
 
 
 " ======================== Mapping ========================
@@ -190,6 +218,9 @@ noremap a A
 " Use Tab and S-Tab to switch between buffers
 nnoremap  <silent>   <Tab>  :bnext<CR>
 nnoremap  <silent> <S-Tab>  :bprevious<CR>
+
+" Toggle highlighting text exceeding 80 characters
+nnoremap <silent> <C-q> :call ToggleHlLineLength()<CR>
 
 
 " ======================= Statusbar =======================
