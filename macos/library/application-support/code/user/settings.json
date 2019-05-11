@@ -1,6 +1,7 @@
 {
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.tabSize": 2,
+  "emmet.triggerExpansionOnTab": true,
   "explorer.autoReveal": false,
   "explorer.confirmDelete": false,
   "files.insertFinalNewline": true,
