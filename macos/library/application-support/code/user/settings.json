@@ -16,5 +16,9 @@
   "workbench.statusBar.visible": false,
   "workbench.iconTheme": "vscode-icons",
   "workbench.colorTheme": "Seti (Improved)",
-  "workbench.editor.enablePreviewFromQuickOpen": false
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "prettier.singleQuote": true,
+  "prettier.tslintIntegration": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true
 }
