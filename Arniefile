@@ -60,7 +60,7 @@ env :macos do
   end
 
   group :puma_dev do
-    run do
+    run :puma_dev do
       %x( sudo puma-dev -setup )
     end
   end
