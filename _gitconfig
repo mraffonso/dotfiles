@@ -40,6 +40,7 @@
   pl          = pull
   pu          = push
   pullall     = submodule update --recursive --remote
+  rco         = "! f() { git checkout --track origin/$1; }; f"
   recommit    = commit --amend
   uncommit    = reset --hard HEAD^
   unstage     = "! f() { git reset HEAD -- \"$1\"; }; f"
@@ -53,3 +54,10 @@
 [user]
   name  = Mario Affonso
   email = mario@thecodebeach.com
+[pull]
+	rebase = false
+[mergetool "smerge"]
+	cmd = smerge mergetool \"$BASE\" \"$LOCAL\" \"$REMOTE\" -o \"$MERGED\"
+	trustExitCode = true
+[merge]
+	tool = smerge
