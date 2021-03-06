@@ -1,5 +1,20 @@
 // Place your key bindings in this file to overwrite the defaults
 [
     { "key": "cmd+y",           "command": "redo",
-        "when": "textInputFocus && !editorReadonly" },
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "shift+alt+d",
+        "command": "flutter.selectDevice"
+    },
+    {
+        "key": "ctrl+alt+d",
+        "command": "dart.openDevTools",
+        "when": "dart-code:dartProjectLoaded && inDebugMode"
+    },
+    {
+        "key": "ctrl+alt+d",
+        "command": "-dart.openDevTools",
+        "when": "dart-code:dartProjectLoaded && inDebugMode"
+    },
 ]
