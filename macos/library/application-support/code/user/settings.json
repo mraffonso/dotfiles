@@ -6,6 +6,7 @@
   "explorer.confirmDelete": false,
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
+  "search.location": "panel",
   "telemetry.enableTelemetry": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "vsicons.projectDetection.autoReload": true,
@@ -23,5 +24,10 @@
   "workbench.colorTheme": "Seti (Improved)",
   "extensions.ignoreRecommendations": true,
   "dart.previewLsp": true,
-  "terminal.integrated.sendKeybindingsToShell": true
+  "terminal.integrated.sendKeybindingsToShell": true,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "prettier.singleQuote": true,
+  "prettier.tslintIntegration": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true
 }
