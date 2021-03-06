@@ -50,7 +50,8 @@
 		"node_modules",
 		"build"
 	],
-	"font_size": 10,
+	"font_size": 12,
+	"git_gutter_show_line_annotation": true,
 	"highlight_line": true,
 	"hot_exit": false,
 	"ignored_packages":
@@ -61,6 +62,12 @@
 	"index_files": true,
 	"line_padding_bottom": 1,
 	"line_padding_top": 1,
+	"match_brackets": false,
+	"match_brackets_angle": false,
+	"match_brackets_braces": false,
+	"match_brackets_content": false,
+	"match_brackets_square": false,
+	"match_tags": false,
 	"mouse_wheel_tabswitch": false,
 	"overlay_scroll_bars": "enabled",
 	"remember_open_files": false,
@@ -73,5 +80,6 @@
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"update_check": false,
+	"vintage_start_in_command_mode": true,
 	"word_wrap": true
 }

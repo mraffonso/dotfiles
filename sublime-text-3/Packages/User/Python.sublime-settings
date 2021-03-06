@@ -1,7 +1,13 @@
 {
 	"extensions":
 	[
-		"py3",
-		"pyw"
-	]
+		"pyw",
+		"py3"
+	],
+	"rulers":
+	[
+		79
+	],
+	"tab_size": 4,
+	"translate_tabs_to_spaces": true
 }

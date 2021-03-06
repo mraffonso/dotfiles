@@ -2,5 +2,14 @@
   { "keys": ["super+h"], "command": "dash_doc" },
   { "keys": ["super+alt+n"], "command": "side_bar_new_file2" },
   { "keys": ["super+alt+r"], "command": "side_bar_rename" },
-  { "keys": ["super+shift+a"], "command": "alignment" }
+  { "keys": ["super+shift+a"], "command": "alignment" },
+  { "keys": ["super+f"], "command": "show_panel", "args": {"panel": "replace", "reverse": false} },
+  {
+    "keys": ["j", "j"],
+    "command": "exit_insert_mode",
+    "context": [
+      { "key": "setting.command_mode", "operand": false },
+      { "key": "setting.is_widget", "operand": false }
+    ]
+  }
 ]
