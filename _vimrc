@@ -11,15 +11,20 @@
 set nocompatible
 
 " Set encoding to utf-8 for use of special characters in this file
-set encoding=utf-8
-scriptencoding utf-8
+set encoding=utf-8 nobomb " BOM often causes trouble
+scriptencoding utf-8 nobomb " BOM often causes trouble
 
+" --- performance / buffer ---
+set hidden " to switch current buffer without writing
+set lazyredraw " Don't update the display while executing macros
+set ttyfast " Send more characters at a given time.
 
 " ================= General Configuration =================
 
 set number " Line numbers are good
 set backspace=indent,eol,start " Allow backspace in insert mode
-set history=1000 " Store lots of :cmdline history
+set history=999 " Store lots of :cmdline history
+set undolevels=999 " Increase undos
 set showcmd " Show incomplete cmds down the bottom
 set showmode " Show current mode down the bottom
 set gcr=a:blinkon0 " Disable cursor blink
@@ -33,20 +38,108 @@ set fileformat=unix " Ditch the dirty CRLF
 syntax on
 
 " Change leader to a comma because the backslash is too far away.
-" This has to be set before vundle
 let mapleader=","
+let maplocalleader=";"
 
 " Crontab fix, don't use writebackup when editing crontab files.
 autocmd filetype crontab setlocal nobackup nowritebackup
 
 
-" ================= Vundle Initialization =================
+" =================== Bootstrap vim-plug ==================
 
-" This loads all the plugins specified in ~/.vim/vundle.vim
-" Use Vundle plugin to manage all other plugins
-if filereadable(expand("~/.vim/vundles.vim"))
-  source ~/.vim/vundles.vim
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
+
+" ==================== Install & Configure Plugins ====================
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+" fzf.vim
+" Fuzzy finder vim configurations by the author
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+" {{
+" Use the standard fzf leader+f bindings
+nnoremap <silent> <leader>f :FZF<cr>
+nnoremap <silent> <leader>F :FZF ~<cr>
+
+" Also set ctrlp bindings, because I always forget
+nnoremap <silent> <C-p> :Files<CR>
+nnoremap <silent> <C-P> :Files<CR>
+" }}
+
+" vinegar.vim
+" vinegar.vim enhances netrw, to mitigate the need for project drawer plugins.
+Plug 'tpope/vim-vinegar'
+
+" lightline
+" A light and configurable statusline/tabline plugin for vim
+Plug 'itchyny/lightline.vim'
+" {{
+let g:lightline = {
+  \   'colorscheme': 'wombat',
+  \   'active': {
+  \     'left':[ [ 'mode', 'paste' ],
+  \              [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+  \     ]
+  \   },
+  \   'component': {
+  \     'lineinfo': ' %3l:%-2v',
+  \   },
+  \   'component_function': {
+  \     'gitbranch': 'fugitive#head',
+  \   }
+  \ }
+
+let g:lightline.subseparator = {
+  \   'left': '|', 'right': '|'
+  \}
+" }}
+
+" vim-gitgutter
+" A Vim plugin which shows a git diff in the gutter and stages/reverts hunks
+Plug 'airblade/vim-gitgutter'
+
+" vim-bufferline
+" Super simple vim plugin to show the list of buffers in the command bar
+Plug 'bling/vim-bufferline'
+
+" asmM6502.vim : MOS 6502 Assembly syntax
+" Syntax for the 6502, included 'Sally' (Atari8) ops
+Plug 'vim-scripts/asmM6502.vim'
+
+" Molokai-dark
+" Molokai-dark is a darker and re-worked version of the Molokai theme by @tomasr.
+Plug 'pR0Ps/molokai-dark'
+" {{
+let g:molokaidark_undercolor_gui = 1
+let g:molokaidark_undercolor_cterm = 0
+" }}
+
+" vim-crystal
+" Vim Filetype Support for Crystal
+Plug 'vim-crystal/vim-crystal'
+
+"NERD Commenter
+"Comment functions so powerful—no comment necessary.
+Plug 'preservim/nerdcommenter'
+
+" Initialize plugin system
+call plug#end()
+
+colorscheme molokai-dark
 
 
 " ================= Swap, Backps & Viminfo ================
@@ -93,6 +186,9 @@ set list listchars=tab:\ \ ,trail:·
 set nowrap " Don't wrap lines
 set linebreak "Wrap lines at convenient points
 
+" Splits - feels more natural
+set splitbelow
+set splitright
 
 " ========================= Folds =========================
 
@@ -166,7 +262,7 @@ endfunction
 
 " Asks the user yes or no
 function! AskYN(message)
-  echom a:message 
+  echom a:message
   while 1
     let choice = input('y/n? ')
     if tolower(choice) == 'y'
@@ -203,14 +299,30 @@ command -nargs=0 HlLineLength :call ToggleHlLineLength()
 
 " ======================== Mapping ========================
 
+" Freed <C-l> from Netrw
+nmap <leader><leader><leader>l <Plug>NetrwRefresh
+
 " Remap jj to escape in insert mode
 inoremap jj <Esc>
 nnoremap JJJJ <Nop>
 inoremap JJ <ESC>
 nnoremap JJJJ <Nop>
 
+" Easier split navigations
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-l> <C-W>l
+nnoremap <C-h> <C-W>h
+
+" Delete and paste without affecting the buffer
+" nnoremap <leader>d "_d
+" xnoremap <leader>d "_d
+" xnoremap <leader>p "_dP
+
+noremap <silent> <C-_> :let @/ = ''<CR>
+
 " Setup toggling search highlighting
-nnoremap <silent> <C-l> :call ToggleHlsearch()<CR><C-l>:echo HlsearchStatus()<CR>
+" nnoremap <silent> <C-l> :call ToggleHlsearch()<CR><C-l>:echo HlsearchStatus()<CR>
 
 " Remap a to A in command mode
 noremap a A
@@ -223,22 +335,44 @@ nnoremap  <silent> <S-Tab>  :bprevious<CR>
 nnoremap <silent> <C-q> :call ToggleHlLineLength()<CR>
 
 
+" =================== Filetype Specific ===================
+
+" function! SyntaxForAsmM6502()
+"  setlocal shiftwidth=4
+"  setlocal softtabstop=4
+"  setlocal tabstop=4
+"  setlocal noexpandtab
+"  if filereadable(expand("~/.vim/bundle/asmM6502.vim/syntax/asmM6502.vim"))
+"    source ~/.vim/bundle/asmM6502.vim/syntax/asmM6502.vim
+"  endif
+" endfunction
+
+autocmd FileType asm call SyntaxForAsmM6502()
+
+
 " ======================= Statusbar =======================
 
 set laststatus=2
 set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 
 
+" ============== Move Line/Visual up or down ==============
+
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
+
 " ================ Post Setup Instructions ================
 
 " After a fresh setup with this vim config you should do the following.
 
-" Install vundle and plugins
-" git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-" vim +PluginInstall +qall
-
-" Add helptags for ctrlp
-" vim -c "helptags ~/.vim/bundle/ctrlp.vim/doc" -qall
+" Install vim-plug
+" curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+"     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 " Create tags for OmniCppComplete
 "
@@ -254,3 +388,4 @@ set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 " Windows
 " ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ -f "%USERPROFILE%\.vim\tags\cpp" C:\MinGW\lib\gcc\mingw32\4.8.1\include\c++
 " ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ -f "%USERPROFILE%\.vim\tags\sfml" C:\SFML-2.1\include\SFML
+

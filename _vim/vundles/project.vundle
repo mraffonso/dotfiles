@@ -1,3 +1,0 @@
-" ctrlp
-" Full path fuzzy file, buffer, mru, tag, ... finder for Vim
-Plugin 'ctrlpvim/ctrlp.vim'

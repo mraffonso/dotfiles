@@ -3,8 +3,10 @@
 *.swo
 *~
 .netrwhist
+_vim/autoload/**
+!_vim/autoload/.gitkeep
 _vim/backups/**
-_vim/bundle/**
+_vim/plugged/**
 _vim/nviminfo*
 _vim/viminfo
 
