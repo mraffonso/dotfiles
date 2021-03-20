@@ -30,7 +30,7 @@ set showmode " Show current mode down the bottom
 set gcr=a:blinkon0 " Disable cursor blink
 set visualbell " No sounds
 set autoread " Reload files changed outside vim
-set nohidden " Close buffers immediately
+" set nohidden " Close buffers immediately
 set mouse=a " Mouse support in console
 set fileformat=unix " Ditch the dirty CRLF
 set clipboard=unnamed
