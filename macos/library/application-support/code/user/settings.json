@@ -6,7 +6,6 @@
   "explorer.confirmDelete": false,
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
-  "search.location": "panel",
   "telemetry.enableTelemetry": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "vsicons.projectDetection.autoReload": true,

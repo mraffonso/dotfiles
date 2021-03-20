@@ -33,6 +33,7 @@ set autoread " Reload files changed outside vim
 set nohidden " Close buffers immediately
 set mouse=a " Mouse support in console
 set fileformat=unix " Ditch the dirty CRLF
+set clipboard=unnamed
 
 " Turn on syntax highlighting
 syntax on
@@ -43,6 +44,10 @@ let maplocalleader=";"
 
 " Crontab fix, don't use writebackup when editing crontab files.
 autocmd filetype crontab setlocal nobackup nowritebackup
+
+" Turn on Omni completion
+"filetype plugin indent on
+"set omnifunc=syntaxcomplete#Complete
 
 
 " =================== Bootstrap vim-plug ==================
@@ -131,6 +136,9 @@ let g:molokaidark_undercolor_cterm = 0
 " vim-crystal
 " Vim Filetype Support for Crystal
 Plug 'vim-crystal/vim-crystal'
+" {{
+let g:crystal_auto_format = 1 " Turn on auto format on save for crystal filetype
+" }}
 
 "NERD Commenter
 "Comment functions so powerful—no comment necessary.
@@ -234,6 +242,13 @@ let g:clipbrdDefaultReg = '+' " Since I use linux, I want this
 vmap <C-c> "+y " Copy selected text with CTRL+c
 
 
+" ========================= netrw ========================
+
+" Make netrw use rm -r instead of rmdir so we can remove
+" directories that have files
+let g:netrw_localrmdir='rm -r'
+
+
 "==================== Custom Functions ====================
 
 " Search and count occurences
@@ -319,7 +334,7 @@ nnoremap <C-h> <C-W>h
 " xnoremap <leader>d "_d
 " xnoremap <leader>p "_dP
 
-noremap <silent> <C-_> :let @/ = ''<CR>
+noremap <silent> <leader><Bslash> :let @/ = ''<CR>
 
 " Setup toggling search highlighting
 " nnoremap <silent> <C-l> :call ToggleHlsearch()<CR><C-l>:echo HlsearchStatus()<CR>
@@ -333,6 +348,13 @@ nnoremap  <silent> <S-Tab>  :bprevious<CR>
 
 " Toggle highlighting text exceeding 80 characters
 nnoremap <silent> <C-q> :call ToggleHlLineLength()<CR>
+
+" Allow Shift+Tab for undent in insert mode
+inoremap <S-Tab> <C-d>
+
+" For compatability with other editors
+vmap <C-_> <plug>NERDCommenterToggle
+nmap <C-_> <plug>NERDCommenterToggle
 
 
 " =================== Filetype Specific ===================
@@ -348,7 +370,6 @@ nnoremap <silent> <C-q> :call ToggleHlLineLength()<CR>
 " endfunction
 
 autocmd FileType asm call SyntaxForAsmM6502()
-
 
 " ======================= Statusbar =======================
 
