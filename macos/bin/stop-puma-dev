@@ -54,14 +54,14 @@ main()
     echo "... puma-dev is not running"
   fi
 
-  echo "Detecting fsevent_watch processes ..."
+#  echo "Detecting fsevent_watch processes ..."
 
-  if detect_running_processes "fsevent_watch"; then
-    echo "... Detected fsevent_watch"
-    stop_fsevent_watch
-  else
-    echo "... fsevent_watch is not running"
-  fi
+  #if detect_running_processes "fsevent_watch"; then
+    #echo "... Detected fsevent_watch"
+    #stop_fsevent_watch
+  #else
+    #echo "... fsevent_watch is not running"
+  #fi
 
   echo
 
