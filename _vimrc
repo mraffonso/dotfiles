@@ -85,10 +85,6 @@ nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <C-P> :Files<CR>
 " }}
 
-" vinegar.vim
-" vinegar.vim enhances netrw, to mitigate the need for project drawer plugins.
-Plug 'tpope/vim-vinegar'
-
 " lightline
 " A light and configurable statusline/tabline plugin for vim
 Plug 'itchyny/lightline.vim'
@@ -140,9 +136,31 @@ Plug 'vim-crystal/vim-crystal'
 let g:crystal_auto_format = 1 " Turn on auto format on save for crystal filetype
 " }}
 
-"NERD Commenter
-"Comment functions so powerful—no comment necessary.
+" NERD Commenter
+" Comment functions so powerful—no comment necessary.
 Plug 'preservim/nerdcommenter'
+
+" nnn.nim
+" File manager for vim/neovim powered by n³.
+Plug 'mcchrish/nnn.vim'
+" {{
+" Diable netrw
+let loaded_netrwPlugin = 1
+" Floating window (neovim latest and vim with patch 8.2.191)
+let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
+" }}
+
+" VimCompletesMe
+" A super simple, super minimal, super light-weight tab-completion plugin for Vim.
+" Plug 'ackyshake/VimCompletesMe'
+
+" coc.nvim
+" Make your Vim/Neovim as smart as VSCode.
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" coc-clangd
+" This extension connects coc.nvim to the clangd language server.
+" Plug 'clangd/coc-clangd'
 
 " Initialize plugin system
 call plug#end()
@@ -191,7 +209,7 @@ filetype indent on
 " Display tabs and trailing spaces visually
 set list listchars=tab:\ \ ,trail:·
 
-set nowrap " Don't wrap lines
+set wrap " Wrap lines
 set linebreak "Wrap lines at convenient points
 
 " Splits - feels more natural
@@ -246,7 +264,7 @@ vmap <C-c> "+y " Copy selected text with CTRL+c
 
 " Make netrw use rm -r instead of rmdir so we can remove
 " directories that have files
-let g:netrw_localrmdir='rm -r'
+" let g:netrw_localrmdir='rm -r'
 
 
 "==================== Custom Functions ====================
@@ -315,7 +333,7 @@ command -nargs=0 HlLineLength :call ToggleHlLineLength()
 " ======================== Mapping ========================
 
 " Freed <C-l> from Netrw
-nmap <leader><leader><leader>l <Plug>NetrwRefresh
+" nmap <leader><leader><leader>l <Plug>NetrwRefresh
 
 " Remap jj to escape in insert mode
 inoremap jj <Esc>
@@ -405,6 +423,7 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 "
 " macOS
 " ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ -f ~/.vim/ctags/cpp /Library/Developer/CommandLineTools/usr/include/c++
+" ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ -f ~/.vim/ctags/sdl2 /usr/local/Cellar/sdl2/2.0.14_1/include
 "
 " Windows
 " ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ -f "%USERPROFILE%\.vim\tags\cpp" C:\MinGW\lib\gcc\mingw32\4.8.1\include\c++
