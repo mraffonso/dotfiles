@@ -49,7 +49,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew capistrano chucknorris compleat gem git node npm nvm osx pip python rails rake ruby rvm tmux tmuxinator vagrant web-search)
+plugins=(brew capistrano chucknorris compleat gem git node npm nvm osx pip python rails rake ruby rvm tmux tmuxinator vagrant web-search fzf)
 
 # User configuration
 
@@ -106,14 +106,20 @@ HELPDIR=/usr/local/share/zsh/help
 
 fpath=(/usr/local/share/zsh-completions $fpath)
 
+# zsh-completions
+# autoload -Uz compinit
+# compinit
+
+
+# ZSH Autosuggestions
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # Load profile
 source $HOME/.profile
 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Make anything a REPL
+rapl() { while true; do printf "$(echo $@)> " && read cmd && $(echo $@) $(echo $cmd); done }
 
-eval $(thefuck --alias)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+. /usr/local/opt/asdf/asdf.sh

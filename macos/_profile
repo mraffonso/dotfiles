@@ -1,15 +1,78 @@
-# Custom bin
+# Personal bin path
 export PATH="$HOME/bin:$PATH"
+
+# Local bin path
+export PATH="$HOME/.localbin:$PATH"
 
 # Brew sbin
 export PATH="/usr/local/sbin:$PATH"
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
-# Load RVM into a shell session *as a function*
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+# Fix for brew's openssl
+export PKG_CONFIG_PATH=/usr/local/opt/openssl/lib/pkgconfig
 
 # NVM
 export NVM_DIR="$HOME/.nvm"
 . "/usr/local/opt/nvm/nvm.sh"
+
+# Elixir
+eval "$(exenv init -)"
+
+# Docker Machine
+if [ "$(docker-machine status default)" = "Running" ]; then
+  eval $(docker-machine env)
+fi
+
+# # If qt exists; add to path
+# if [ -s $HOME/Qt/5.11.1/clang_64/bin ]; then
+#   export PATH="$HOME/Qt/5.11.1/clang_64/bin:$PATH"
+# fi
+
+# Rbenv
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+. /Users/mario/miniconda3/etc/profile.d/conda.sh
+
+# Jenv
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
+# Flutter
+export PATH="$PATH:$HOME/.flutter_sdk/bin"
+
+# Thefuck
+eval $(thefuck --alias)
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/mario/.google-cloud-sdk/path.zsh.inc' ]; then . '/Users/mario/.google-cloud-sdk/path.zsh.inc'; fi
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/mario/.google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/mario/.google-cloud-sdk/completion.zsh.inc'; fi
+
+## >>> conda initialize >>>
+## !! Contents within this block are managed by 'conda init' !!
+#__conda_setup="$('/Users/mario/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+#if [ $? -eq 0 ]; then
+    #eval "$__conda_setup"
+#else
+    #if [ -f "/Users/mario/miniconda3/etc/profile.d/conda.sh" ]; then
+        #. "/Users/mario/miniconda3/etc/profile.d/conda.sh"
+    #else
+        #export PATH="/Users/mario/miniconda3/bin:$PATH"
+    #fi
+#fi
+#unset __conda_setup
+## <<< conda initialize <<<
+
+PYTHONDONTWRITEBYTECODE=1
+
+# Make fzf use rg
+if type rg &> /dev/null; then
+  export FZF_DEFAULT_COMMAND="rg --files --hidden"
+  export FZF_DEFAULT_OPTS="-m --height 50% --border"
+fi
+
+# asdf
+echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ${ZDOTDIR:-~}/.zshrc
+
+# Use brew clang
+export PATH="$PATH:/usr/local/Cellar/llvm/12.0.0_1/bin"
+
