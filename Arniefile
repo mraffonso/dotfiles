@@ -17,8 +17,8 @@ env :macos do
       %x( source ~/.profile )
 
       %x( git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build )
-      %x( rbenv install 2.5.3 )
-      %x( rbenv global 2.5.3 )
+      %x( rbenv install 2.7.3 )
+      %x( rbenv global 2.7.3 )
     end
   end
 
@@ -28,7 +28,7 @@ env :macos do
       %x( brew bundle )
     end
 
-    %x( brew pin qt )
+    # %x( brew pin qt )
   end
 
   group :ruby_gems do
@@ -48,14 +48,10 @@ env :macos do
     symlink "_gitignore_global", ".gitignore_global"
   end
 
-  group :hg do
-    symlink "_hgrc", ".hgrc"
-  end
-
   group :nvm do
     run :nvm_setup do
       # Create NVM's working directory if it doesn't exist
-      %x( mkdir -p ~/.nvm)
+      %x( mkdir -p ~/.nvm )
     end
   end
 
@@ -74,7 +70,7 @@ env :macos do
   end
 
   group :subl do
-    symlink "sublime-text-3/Packages/User", "Library/Application Support/Sublime Text 3/Packages/User"
+    symlink "sublime-text-3/Packages/User", "Library/Application Support/Sublime Text/Packages/User"
   end
 
   group :vscode do
@@ -122,7 +118,7 @@ env :macos do
 
   group :oh_my_zsh do
     run :install do
-      %x( sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" )
+      %x( sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" )
     end
 
     symlink "_oh-my-zsh/custom/plugins/mario", ".oh-my-zsh/custom/plugins/mario"

@@ -1,44 +1,44 @@
-dotfiles
-========
+# dotfiles
 
-A collection of config files that I use in my day to day escapades.
+My configuration files.
 
-Git
----
+## Bootstrapping
+
+On macOS:
+
+- Install Homebrew
+- `brew install rbenv`
+- 'rbenv install 
+
+## Git
 
 Installs .gitconfig file.
 
 **Action required**: Set email address.
 
-Mercurial
---
+## Mercurial
 
 Installs .hgrc file.
 
 **Action required**: Set email address.
 
-NeoVim
-------
+## NeoVim
 
 Symlinks .vimrc file.
 
-Rails
------
+## Rails
 
 Symlinks .railsrc file.
 
-Ruby gems
----------
+## Ruby gems
 
 Symlinks .gemrc file.
 
-Tmux
-----
+## Tmux
 
 Symlinks .tmux.conf file.
 
-Vim
----
+# Vim
 
 Symlinks .vimrc file.
 Symlinks .vim directory.

@@ -20,7 +20,6 @@
   "debug.openDebug": "openOnDebugBreak",
   "vsicons.dontShowNewVersionMessage": true,
   "editor.formatOnSave": true,
-  "workbench.colorTheme": "Seti (Improved)",
   "extensions.ignoreRecommendations": true,
   "dart.previewLsp": true,
   "terminal.integrated.sendKeybindingsToShell": true,
@@ -28,5 +27,6 @@
   "prettier.singleQuote": true,
   "prettier.tslintIntegration": true,
   "editor.formatOnSave": true,
-  "editor.formatOnPaste": true
+  "editor.formatOnPaste": true,
+  "workbench.colorTheme": "Seti (Improved)"
 }
