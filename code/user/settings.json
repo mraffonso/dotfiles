@@ -23,10 +23,21 @@
   "extensions.ignoreRecommendations": true,
   "dart.previewLsp": true,
   "terminal.integrated.sendKeybindingsToShell": true,
-  "workbench.editor.enablePreviewFromQuickOpen": false,
   "prettier.singleQuote": true,
   "prettier.tslintIntegration": true,
-  "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
-  "workbench.colorTheme": "Seti (Improved)"
+  "workbench.colorTheme": "Seti (Improved)",
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.rulers": [
+      80
+    ],
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": false
+  },
+  "dart.flutterSdkPath": "/home/mario/.flutter_sdk"
 }

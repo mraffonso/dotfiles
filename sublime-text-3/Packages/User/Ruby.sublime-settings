@@ -1,14 +1,14 @@
 {
 	"extensions":
 	[
-		"thor",
-		"rake",
-		"Dotfile",
-		"jbuilder",
-		"rabl",
 		"podspec",
-		"simplecov",
+		"thor",
+		"Dotfile",
 		"rb",
-		"rb.example"
-	]
+		"jbuilder",
+		"rake",
+		"rabl",
+		"simplecov",
+		"rb.example",
+	],
 }

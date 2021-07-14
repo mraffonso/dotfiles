@@ -50,13 +50,19 @@
 		"node_modules",
 		"build"
 	],
-	"font_size": 12,
+	"font_size": 9,
 	"git_gutter_show_line_annotation": true,
 	"highlight_line": true,
 	"hot_exit": false,
 	"ignored_packages":
 	[
+		"Liquid",
+		"LSP",
 		"Markdown",
+		"NASM x86 Assembly",
+		"RuboCop",
+		"SublimeLinter-ruby",
+		"Svelte",
 		"Vintage",
 	],
 	"index_files": true,

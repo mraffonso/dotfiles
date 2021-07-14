@@ -21,4 +21,4 @@ sublime-text-3/Packages/User/*.crt
 .DS_Store
 
 # Bundler
-macos/_bundle/cache/**
+_bundle/cache/**

@@ -40,7 +40,7 @@ env :macos do
   end
 
   group :bundler do
-    symlink "macos/_bundle", ".bundle"
+    symlink "_bundle", ".bundle"
   end
 
   group :git do
