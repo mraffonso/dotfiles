@@ -1,9 +1,13 @@
 [alias]
+  a           = add
   ac          = "! f() { git add .; git commit -am \"$1\"; }; f"
   alias       = config --get-regexp alias
   aliases     = "! f() { git config --get-regexp alias | cut -d' ' -f1; }; f"
   b           = branch
+  bd          = branch -d
   c           = commit
+  cb          = "! f() { git checkout -b $1; }; f"
+  cm          = "! f() { git commit -m \"$1\"; }; f"
   changes     = "! f() {\
                   if [ $# == 2 ]; then\
                     git diff --stat \"$1\" \"$2\";\
@@ -12,8 +16,8 @@
                   else\
                     git diff --stat HEAD;\
                   fi\
-                };\
-                f"
+              }; f"
+  cl          = clear
   clear       = "! f() { clear; }; f"
   co          = checkout
   count       = "! f() {\
@@ -22,8 +26,8 @@
                   else\
                     git rev-list --count master;\
                   fi\
-                };\
-                f"
+                }; f"
+  dh          = diff HEAD
   files       = "! f() {\
                   if [ $# == 2 ]; then\
                     git diff --name-status \"$1\" \"$2\";\
@@ -32,24 +36,41 @@
                   else\
                     git diff --stat HEAD;\
                   fi\
-                };\
-                f"
+                }; f"
   hard-reset  = "! f() { git reset --hard && git clean -f -d; }; f"
+  l           = ls
   lol         = log --graph --decorate --pretty=oneline --abbrev-commit --all
   ls          = "! f() { ls $1; }; f"
+  m           = merge
+  p           = pl
   pl          = pull
   pu          = push
   pullall     = submodule update --recursive --remote
   rco         = "! f() { git checkout --track origin/$1; }; f"
+  s           = status
   recommit    = commit --amend
   uncommit    = reset --hard HEAD^
+  unpush      = "! f() {\
+                echo \"WARNING: Don't use if others use this repo and have pulled!\\n\";\
+                echo -n \"Are you sure you want to do this? (y/n)? \";\
+                old_stty_cfg=$(stty -g);\
+                stty raw -echo; answer=$(head -c 1) ; stty $old_stty_cfg;\
+                if echo \"$answer\" | grep -iq \"^y\"; then\
+                  echo;\
+                  git reset --soft HEAD^;\
+                  git push origin +$(git branch --show-current);\
+                  echo \"\\nUnpushed!  Please go and check that nothing catastrophic happened.\\n\";\
+                else\
+                    echo \"\\nProbably a wise choice.\\n\" ;\
+                fi;\
+              }; f"
   unstage     = "! f() { git reset HEAD -- \"$1\"; }; f"
 
 [color]
   ui = true
 
 [core]
-  excludesfile = ~/.gitignore_global
+	excludesfile = /home/mario/.gitignore_global
 
 [user]
   name  = Mario Affonso
@@ -61,3 +82,7 @@
 	trustExitCode = true
 [merge]
 	tool = smerge
+[pager]
+	branch = false
+[init]
+	defaultBranch = main
