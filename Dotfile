@@ -1,0 +1,151 @@
+require "./dotfile_helpers"
+
+shared do
+  configure :bundler do
+    symlink "_bundle", ".bundle"
+  end
+
+  configure :git do
+    symlink "_gitconfig", ".gitconfig"
+    symlink "_gitignore_global", ".gitignore_global"
+  end
+
+  configure :nvim do
+    symlink "_vim", ".vim"
+    symlink "_vimrc", ".vimrc"
+    symlink "_vimrc", ".config/nvim/init.vim" # For NVIM Compat
+
+    unless_exists ".vim/plugged" do
+      mkdir ".vim/plugged"
+      echo "Install Plugins" do
+        cmd "vim +PluginInstall +qall"
+      end
+    end
+  end
+
+  configure :rails do
+    symlink "_railsrc", ".railsrc"
+  end
+
+  install :rbenv do
+    unless_exists ".rbenv" do
+      cmd "git clone https://github.com/rbenv/rbenv.git ~/.rbenv"
+      cmd "echo 'eval \"$(~/.rbenv/bin/rbenv init - bash)\"' >> ~/.bash_profile"
+      cmd "echo 'eval \"$(~/.rbenv/bin/rbenv init - zsh)\"' >> ~/.zshrc"
+      mkdir "~/.rbenv/plugins"
+      cd "~/.rbenv/plugins" do
+        cmd "git clone https://github.com/rbenv/ruby-build.git \"$(rbenv root)\"/plugins/ruby-build"
+      end
+    end
+  end
+
+  configure :ruby_gems do
+    symlink "_gemrc", ".gemrc"
+  end
+end
+
+platform :macos do
+  requires :prerequisites do
+    symlink "macos/Brewfile", "Brewfile"
+    cd "~" do
+      cmd "brew bundle"
+    end
+  end
+  configure :git
+end
+
+platform :ubuntu do
+  requires :prerequisites do
+    run :apt_update do
+      cmd "sudo apt-get update"
+    end
+    apt_install %w(git)
+    install :zsh do
+      cmd "sudo apt-get install zsh"
+    end
+    echo "Install ruby-build requirements" do
+      apt_install %w(autoconf patch build-essential rustc libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libgmp-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev uuid-dev)
+    end
+    install :vim_plugin_dependencies do
+      apt_install %w(fzf silversearcher-ag)
+    end
+  end
+
+  setup :profile do
+    symlink "ubuntu/_profile", ".profile"
+  end
+
+  setup :bin do
+    symlink "ubuntu/bin", "bin"
+  end
+
+  install :rbenv
+
+  install :ruby do
+    cmd "rbenv install 3.2.2"
+  end
+
+  configure :ruby_gems
+
+  install :global_gems do
+    cd "~" do
+      cmd "gem install rails"
+      cmd "gem install tmuxinator"
+    end
+  end
+
+  configure :bundler
+  configure :git
+  configure :nvim
+  configure :rails
+
+  setup :subl do
+    mkdir ".config/sublime-text/Packages"
+    symlink "_config/sublime-text/Packages/User", ".config/sublime-text/Packages/User"
+  end
+
+  configure :tmux do
+    symlink "_tmux/tmux.conf", ".tmux.conf"
+  end
+
+  setup :vscode do
+    mkdir ".config/Code/User"
+    symlink "_config/Code/User/keybindings.json", ".config/Code/User/keybindings.json"
+    symlink "_config/Code/User/settings.json", ".config/Code/User/settings.json"
+  end
+
+  setup :zsh do
+    symlink "_zshrc", ".zshrc"
+    echo <<-INSTRUCTIONS
+
+      If zsh is not setup you may need to do:
+      # Add to /etc/shells
+      echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells
+      # Set my default shell
+      chsh -s /usr/local/bin/zsh
+
+    INSTRUCTIONS
+    .red
+
+    echo "also other stuff!"
+  end
+
+  setup :oh_my_zsh do
+    unless_exists ".oh-my-zsh" do
+      cmd %(sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)")
+    end
+
+    symlink "_oh-my-zsh/custom/plugins/mario", ".oh-my-zsh/custom/plugins/mario"
+  end
+end
+
+platform :windows do
+  group :git_bash do
+    symlink "windows/_bashrc", ".bashrc"
+  end
+
+  group :sublime_text do
+    symlink "config/sublime-text", "AppData/Roaming/Sublime Text"
+  end
+end
+
