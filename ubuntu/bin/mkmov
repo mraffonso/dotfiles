@@ -1,0 +1,11 @@
+#!/bin/bash
+
+INPUT_FILE=$1
+OUTPUT_FILE=$2
+
+if [ $# -lt 2 ]; then
+  echo "NOT ENOUGH ARGS"
+  exit 1
+fi
+
+ffmpeg -i "$INPUT_FILE" -c:v prores_ks -profile:v 3 -qscale:v 9 -vendor ap10 -pix_fmt yuv422p10le -acodec pcm_s16le "$OUTPUT_FILE"
