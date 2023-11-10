@@ -1,6 +1,7 @@
 {
 	"extensions":
 	[
-		"coffee"
+		"py3",
+		"pyw"
 	]
 }

@@ -34,7 +34,7 @@
 	"caret_extra_top": 1,
 	"caret_extra_width": 1,
 	"caret_style": "blink",
-	"color_scheme": "Packages/User/SublimeLinter/1337 (SL).tmTheme",
+	"color_scheme": "Packages/1337 Color Scheme/1337.tmTheme",
 	"copy_with_empty_selection": false,
 	"disable_tab_abbreviations_for_scopes": "text.haml",
 	"ensure_newline_at_eof_on_save": true,
@@ -56,14 +56,6 @@
 	"hot_exit": false,
 	"ignored_packages":
 	[
-		"Liquid",
-		"LSP",
-		"Markdown",
-		"NASM x86 Assembly",
-		"RuboCop",
-		"SublimeLinter-ruby",
-		"Svelte",
-		"Vintage",
 	],
 	"index_files": true,
 	"line_padding_bottom": 1,
