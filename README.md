@@ -1,3 +1,3 @@
 # dotfiles
 
-(Mario)[https://github.com/mraffonso]'s configuration files.
+[Mario](https://github.com/mraffonso)'s configuration files.
