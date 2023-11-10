@@ -21,19 +21,14 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
 # Personal bin path
 #export PATH="$HOME/bin:$PATH"
 
 # Local bin path
-#export PATH="$HOME/.localbin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Brew sbin
-export PATH="/usr/local/sbin:$PATH"
+#export PATH="/usr/local/sbin:$PATH"
 
 # Fix for brew's openssl
 #export PKG_CONFIG_PATH=/usr/local/opt/openssl/lib/pkgconfig
@@ -56,12 +51,17 @@ export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
+# Blenv
+#if command -v blenv > /dev/null; then
+  #eval "$(blenv env)"
+#fi
+
 # Jenv
 #export PATH="$HOME/.jenv/bin:$PATH"
 #eval "$(jenv init -)"
 
-# Flutter
 export PATH="$PATH:$HOME/.flutter_sdk/bin"
+# Flutter
 
 # Thefuck
 #eval $(thefuck --alias)
@@ -80,4 +80,16 @@ if type rg &> /dev/null; then
 fi
 
 # Use brew clang
-export PATH="$PATH:/usr/local/Cellar/llvm/12.0.0_1/bin"
+#export PATH="$PATH:/usr/local/Cellar/llvm/12.0.0_1/bin"
+
+# anyenv
+if [ -d "$HOME/.anyenv" ]; then
+  export PATH="$HOME/.anyenv/bin:$PATH"
+  eval "$(anyenv init -)"
+fi
+#. "$HOME/.cargo/env"
+
+export JAVA_HOME=/home/mario/.local/share/flatpak/app/com.google.AndroidStudio/current/active/files/extra/android-studio/jbr
+export PATH=$PATH:$JAVA_HOME/bin
+
+source "$HOME/.cargo/env"
