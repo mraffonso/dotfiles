@@ -1,24 +1,2 @@
-# Vim
-*.swp
-*.swo
-*~
-.netrwhist
-_vim/autoload/**
-!_vim/autoload/.gitkeep
-_vim/backups/**
-_vim/plugged/**
-_vim/nviminfo*
-_vim/viminfo
-
-# Sublime Text 3
-sublime-text-3/Packages/User/Package Control.*
-sublime-text-3/Packages/User/*.crt
-
-
-# Macos #
-#########
-
+# Macos
 .DS_Store
-
-# Bundler
-_bundle/cache/**
