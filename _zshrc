@@ -49,7 +49,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew capistrano chucknorris compleat gem git node npm nvm osx pip python rails rake ruby rvm tmux tmuxinator vagrant web-search fzf)
+plugins=(asdf brew capistrano chucknorris compleat fzf gem git node npm nvm macos pip python rails rake ruby tmux tmuxinator web-search )
 
 # User configuration
 
@@ -89,10 +89,14 @@ alias lockscreen="pmset displaysleepnow"
 alias vag="vagrant"
 alias git-sh="gitsh"
 
+alias pbcopy="xclip -selection clipboard"
+alias pbpaste="xclip -selection clipboard -o"
+alias open="xdg-open"
+
 # Online Help
-unalias run-help
-autoload run-help
-HELPDIR=/usr/local/share/zsh/help
+# unalias run-help
+# autoload run-help
+# HELPDIR=/usr/local/share/zsh/help
 
 # Completions
 # You may also need to force rebuild `zcompdump`:
@@ -105,19 +109,62 @@ HELPDIR=/usr/local/share/zsh/help
 #     chmod go-w '/usr/local/share'
 
 fpath=(/usr/local/share/zsh-completions $fpath)
+fpath=($HOME/.local/share/zsh-completions $fpath)
 
 # zsh-completions
-# autoload -Uz compinit
-# compinit
-
+autoload -Uz compinit
+compinit
 
 # ZSH Autosuggestions
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Load profile
 source $HOME/.profile
 
-# Make anything a REPL
-rapl() { while true; do printf "$(echo $@)> " && read cmd && $(echo $@) $(echo $cmd); done }
+# Make any command a REPL
+repl() { while true; do printf "$(echo $@)> " && read cmd && $(echo $@) $(echo $cmd); done }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+alias oldmgrok=$HOME/repos/oldmgrok/exe/mgrok
+
+# export PATH="$PATH":"$HOME/.pub-cache/bin"
+
+# Dart
+# DART_BIN_PATH=$HOME/.flutter_sdk/.pub-cache/bin
+
+#if [ -d "$DART_BIN_PATH" ]
+#then
+#  export PATH="$PATH":"$DART_BIN_PATH"
+#fi
+
+export PKG_CONFIG_PATH=/usr/local/opt/openssl/lib/pkgconfig
+
+if [[ `uname` == Darwin ]]; then
+    MAX_MEMORY_UNITS=KB
+else
+    MAX_MEMORY_UNITS=MB
+fi
+
+# On Linux, max memory is megabytes; on macOS it's in kilobytes. To get the value for %M, zsh calls getrusage(), and then uses ru_maxrss / 1024. but on Linux, ru_maxrss is in kilobytes, and on Mac it's in bytes. See man getrusage on both platforms.)
+
+TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
+'avg shared (code):         %X KB'$'\n'\
+'avg unshared (data/stack): %D KB'$'\n'\
+'total (sum):               %K KB'$'\n'\
+'max memory:                %M '$MAX_MEMORY_UNITS''$'\n'\
+'page faults from disk:     %F'$'\n'\
+'other page faults:         %R'
+
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+
+alias sysinfo="neofetch"
+
+alias nvims="nvim -S Session.vim"
+alias vims="nvims"
+
+[ -f "/home/mario/.ghcup/env" ] && source "/home/mario/.ghcup/env" # ghcup-env
