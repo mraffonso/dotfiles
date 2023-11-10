@@ -1,8 +1,0 @@
-# Mercurial configuration file
-# See hgrc(5) for more information
-
-# User Interface settings
-[ui]
-username=Mario Affonso <email@address>
-editor=vim
-merge=meld
