@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+<% ${1:iterator} do |${2:args}| %>
+  ${3:code}
+<% end %>
+]]></content>
+  <tabTrigger>%do</tabTrigger>
+  <scope>text.html.rails</scope>
+</snippet>

@@ -68,6 +68,7 @@
 	"match_tags": false,
 	"mouse_wheel_tabswitch": false,
 	"overlay_scroll_bars": "enabled",
+	"relative_line_numbers": true,
 	"remember_open_files": false,
 	"rulers":
 	[
@@ -79,5 +80,6 @@
 	"trim_trailing_white_space_on_save": true,
 	"update_check": false,
 	"vintage_start_in_command_mode": false,
+	"vintage_ctrl_keys": true,
 	"word_wrap": true,
 }

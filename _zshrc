@@ -167,4 +167,7 @@ alias sysinfo="neofetch"
 alias nvims="nvim -S Session.vim"
 alias vims="nvims"
 
+alias m="maths"
+
 [ -f "/home/mario/.ghcup/env" ] && source "/home/mario/.ghcup/env" # ghcup-env
+eval "$(~/.rbenv/bin/rbenv init - zsh)"

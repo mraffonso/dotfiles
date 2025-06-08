@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# volstat -- Prints the system volume
-
-amixer sget Master | awk -F"[][]" '/dB/ { print $2 }'

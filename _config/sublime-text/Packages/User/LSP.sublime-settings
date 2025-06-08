@@ -1,0 +1,18 @@
+// Settings in here override those in "LSP/LSP.sublime-settings"
+{
+  "clients": {
+    "ruby-lsp": {
+      "enabled": true,
+      "command": [
+        "ruby-lsp"
+      ],
+      "selector": "source.ruby",
+      "initializationOptions": {
+        "enabledFeatures": {
+          "diagnostics": false
+        },
+        "experimentalFeaturesEnabled": true
+      }
+    }
+  }
+}

@@ -43,6 +43,10 @@ P.S. You can delete this when you're done too. It's your config now :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -103,9 +107,14 @@ require('lazy').setup({
 
       -- Adds LSP completion capabilities
       'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-buffer',
+
+      -- Adds vscode-like pictograms to neovim built-in lsp
+      'onsails/lspkind.nvim',
 
       -- Adds a number of user-friendly snippets
-      'rafamadriz/friendly-snippets',
+      -- 'rafamadriz/friendly-snippets',
     },
   },
 
@@ -176,10 +185,8 @@ require('lazy').setup({
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
+    main = "ibl",
+    opts = {},
   },
 
   -- "gc" to comment visual regions/lines
@@ -228,6 +235,19 @@ require('lazy').setup({
     end,
   },
 
+  -- Support for LÖVE 2D Game Engine
+  {
+    "S1M0N38/love2d.nvim",
+    cmd = "LoveRun",
+    opts = { },
+    keys = {
+      { "<leader>v", ft = "lua", desc = "LÖVE" },
+      { "<leader>vv", "<cmd>LoveRun<cr>", ft = "lua", desc = "Run LÖVE" },
+      { "<leader>vs", "<cmd>LoveStop<cr>", ft = "lua", desc = "Stop LÖVE" },
+    },
+  },
+  "tikhomirov/vim-glsl",
+
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -252,6 +272,7 @@ vim.o.hlsearch = false
 
 -- Make line numbers default
 vim.wo.number = true
+vim.wo.relativenumber = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -295,8 +316,13 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- My custom convenience mappings
+function ToggleLineNumberStyle()
+  vim.wo.relativenumber = not vim.wo.relativenumber
+end
 vim.keymap.set('i', 'jj', '<Esc>', {})
 vim.keymap.set('n', 'a', 'A', {})
+vim.keymap.set('n', '<leader>L', ToggleLineNumberStyle, { expr = true, desc = 'Toggle [L]ine number style' })
+vim.keymap.set('n', '<C-l>', ToggleLineNumberStyle, { expr = true, desc = 'Toggle [L]ine number style' })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -327,8 +353,8 @@ require('telescope').setup {
   defaults = {
     mappings = {
       i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
+        -- ['<C-u>'] = false,
+        -- ['<C-d>'] = false,
       },
     },
   },
@@ -347,6 +373,12 @@ require('telescope').setup {
       },
     },
   },
+}
+
+require('ibl').setup {
+  indent = {
+    char = '┊'
+  }
 }
 
 
@@ -373,6 +405,9 @@ vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { de
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
+
+vim.keymap.set('n', '<C-p>', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+
 
 -- open file_browser with the path of the current buffer
 vim.api.nvim_set_keymap('n', '<leader>fb', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true })
@@ -512,6 +547,10 @@ local servers = {
 
   lua_ls = {
     Lua = {
+      globals = {
+        'love',
+        'vim',
+      },
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
     },
@@ -549,6 +588,8 @@ local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
+local lspkind = require 'lspkind'
+lspkind.init {}
 
 cmp.setup {
   snippet = {

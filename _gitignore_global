@@ -81,3 +81,5 @@ $RECYCLE.BIN/
 
 # IntelliJ stuff
 .idea
+
+.ruby-lsp/**
